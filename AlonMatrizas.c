@@ -2,27 +2,31 @@
 
 #include "AlonMatrizas.h"
 
-int sumColumnInMatriza(short mat[][DIM], unsigned short row, unsigned short column)
+int sumColumnInMatriza(short mat[][DIM], unsigned short column)
 {
 	int sum = ZERO;
-	for (column; column - ONE; column--)
+	unsigned short row;
+
+	for (row = ZERO; row < DIM; row++)
 	{
-		sum += mat[column][row];
+		sum += mat[row][column];
 	}
 	return (sum);
 }
 
-int sumRowInMatriza(short mat[][DIM], unsigned short row, unsigned short column)
+int sumRowInMatriza(short mat[][DIM], unsigned short row)
 {
 	int sum = ZERO;
-	for (row; row - ONE; row--)
+	unsigned short column;
+
+	for (column = ZERO; column < DIM; column++)
 	{
-		sum += mat[column][row];
+		sum += mat[row][column];
 	}
 	return (sum);
 }
 
-void printMat(char mat[][DIM])
+void printMat(short mat[][DIM])
 {
 	unsigned short matLength = DIM * DIM;
 	unsigned short lastColumn = DIM - ONE;

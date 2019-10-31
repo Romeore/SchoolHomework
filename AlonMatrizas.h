@@ -26,7 +26,7 @@
 #define DIM        3
 #include <stdio.h>
 
-int sumRowInMatriza(short mat[][DIM], unsigned short row, unsigned short column);
+int sumRowInMatriza(short mat[][DIM], unsigned short row);
 
 short sumSymbolInSecondCross(char mat[DIM][DIM], char symbol);
 
@@ -38,7 +38,7 @@ short sumSymbolInColumn(char mat[][DIM], short column, char symbol);
 
 void printMat(short mat[][DIM]);
 
-int sumColumnInMatriza(short mat[][DIM], unsigned short row, unsigned short column);
+int sumColumnInMatriza(short mat[][DIM], unsigned short column);
 
 BOOLEAN isTwoNumbersSameInRow(short mat[][DIM], unsigned short row);
 
