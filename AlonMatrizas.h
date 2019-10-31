@@ -13,6 +13,7 @@
 #define FIVE       5
 #define SIX        6
 #define SEVEN      7
+#define EIGHT      8
 #define NINE       9
 #define TWENTY     (unsigned short)(20)
 #define TWENTYFIVE 25
@@ -24,9 +25,22 @@
 #define ABS(a)     (a < 0) ? -(a) : (a)
 #define MAX(a,b)   (a > b) ? (a) : (b)
 #define DIM        3
+#define DIMONE     10
+#define DIMTWO     8
+
 #include <stdio.h>
 
 int sumRowInMatriza(short mat[][DIM], unsigned short row);
+
+int sumColumnInMatriza(short mat[][DIM], unsigned short column);
+
+int sumMainCrossInMatriza(short mat[][DIM]);
+
+int sumSecondCrossInMatriza(short mat[][DIM]);
+
+short maxInMatriza(short mat[][DIM]);
+
+short minInMatriza(short mat[][DIM]);
 
 short sumSymbolInSecondCross(char mat[DIM][DIM], char symbol);
 
@@ -36,9 +50,9 @@ short sumSymbolInRow(char mat[][DIM], short row, char symbol);
 
 short sumSymbolInColumn(char mat[][DIM], short column, char symbol);
 
-void printMat(short mat[][DIM]);
+void printMatNums(short mat[][DIM]);
 
-int sumColumnInMatriza(short mat[][DIM], unsigned short column);
+void printMatChars(char mat[][DIM]);
 
 BOOLEAN isTwoNumbersSameInRow(short mat[][DIM], unsigned short row);
 
