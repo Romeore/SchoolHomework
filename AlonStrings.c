@@ -1,16 +1,46 @@
+//AlonStrings.c
 #pragma once
+
 #include "AlonStrings.h"
+
+//----------------------------------------------------------------------
+//                           String Length
+//                           -------------
+//
+// General      : This function calculates the length of string.
+//
+// Parameters   : 
+//			string    - A string (char[])
+//
+// Return Value : The length of the string. 
+//
+//----------------------------------------------------------------------
 
 unsigned short stringLength(char string[])
 {
 	unsigned short countLength = ZERO;
+
 	while (string[countLength])
 	{
 		countLength++;
 	}
-
 	return (countLength);
 }
+
+//----------------------------------------------------------------------
+//                        Sum Symbol On String
+//                        --------------------
+//
+// General      : This function sums the amount of specific symbol on
+//                a string.
+//
+// Parameters   : 
+//			string    - A string (char[])
+//          symbol    - A symbol (char)
+//
+// Return Value : The amount of specific symbol on a string.
+//
+//----------------------------------------------------------------------
 
 unsigned short sumSymbolOnString(char string[], char symbol)
 {
@@ -22,9 +52,25 @@ unsigned short sumSymbolOnString(char string[], char symbol)
 		string[position] == symbol ? symbolCounter++ : symbolCounter;
 		position++;
 	}
-
 	return (symbolCounter);
 }
+
+//----------------------------------------------------------------------
+//                     First Symbol Position On String
+//                     -------------------------------
+//
+// General      : This function calculates the position of the first
+//                desired symbol on a string. 
+//
+// Parameters   : 
+//			string    - A string (char[])
+//          symbol    - A symbol (char)
+//
+// Return Value : If the symbol is there, return the first apperance,
+//                else return -1.
+//
+//----------------------------------------------------------------------
+
 
 short firstSymbolPositionOnString(char string[], char symbol)
 {
@@ -34,32 +80,23 @@ short firstSymbolPositionOnString(char string[], char symbol)
 	{
 		position++;
 	}
-
 	position = (string[position] == symbol) ? position : -ONE;
-
 	return (position);
 }
 
-BOOLEAN isSymbolOnString(char string[], char symbol, unsigned short position)
-{
-	while (string[position] && string[position] != symbol)
-	{
-		position++;
-	}
-
-	return (string[position] == symbol);
-}
-
-BOOLEAN compare(char stringOne[], char stringTwo[])
-{
-	unsigned short position = ZERO;
-	while (stringOne[position] != '\0' && stringOne[position] == stringTwo[position])
-	{
-		position++;
-	}
-
-	return (stringOne[position] == stringTwo[position]);
-}
+//----------------------------------------------------------------------
+//                     Concatenation Strings
+//                     ---------------------
+//
+// General      : This function makes concatenation between two strings. 
+//
+// Parameters   : 
+//			stringOne - The string the function adds into (char[])
+//          stringTwo - The string you want to add (char[])
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void concatenationStrings(char stringOne[], char stringTwo[])
 {
@@ -71,40 +108,178 @@ void concatenationStrings(char stringOne[], char stringTwo[])
 		stringOne[firstStringLength + position] = stringTwo[position];
 		position++;
 	}
+	return;
 }
 
-void copyString(char stringOne[], char stringTwo[], unsigned short position)
+//----------------------------------------------------------------------
+//                          Copy String
+//                          -----------
+//
+// General      : This function makes copies a string into another one. 
+//
+// Parameters   : 
+//			oldString  - The string the function copies into (char[])
+//          copyString - The string you want to copy (char[])
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void copyString(char oldString[], char copyString[], unsigned short position)
 {
 	unsigned short stringTwoPosition = ZERO;
-	while (stringOne[position] && stringTwo[stringTwoPosition])
+
+	while (copyString[position] && oldString[stringTwoPosition])
 	{
-		stringOne[position] = stringTwo[stringTwoPosition++];
+		copyString[position] = oldString[stringTwoPosition++];
 		position++;
 	}
+	return;
 }
 
-void cutString(char stringOne[], char cuttedString[], unsigned short startCutPosition)
+//----------------------------------------------------------------------
+//                     Delete Symbol On String
+//                     -----------------------
+//
+// General      : This function deletes specific symbol on string.
+//
+// Parameters   : 
+//			string    - A string (char[])
+//          symbol    - A symbol (char)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteSymbolOnString(char string[], char symbol)
 {
 	unsigned short position = ZERO;
 
-	while (stringOne[startCutPosition] != '\0' && cuttedString[position])
+	while (string[position])
 	{
-		cuttedString[position] = stringOne[startCutPosition];
+		string[position] = (string[position] == symbol) ? GARBAGE : string[position];
+		position++;
+	}
+	return;
+}
+
+//----------------------------------------------------------------------
+//                          Cut String
+//                          ----------
+//
+// General      : This function cuts a string into a smaller one. 
+//
+// Parameters   : 
+//			string           - The string function cuts from (char[])
+//          cuttedString     - The string to get the cut (char[])
+//          startCutPosition - The start position to start cutting(In)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void cutString(char string[], char cuttedString[], unsigned short startCutPosition)
+{
+	unsigned short position = ZERO;
+
+	while (string[startCutPosition] != '\0' && cuttedString[position])
+	{
+		cuttedString[position] = string[startCutPosition];
 		position++;
 		startCutPosition++;
 	}
+	return;
 }
+
+//----------------------------------------------------------------------
+//                          Fill String
+//                          -----------
+//
+// General      : This function fills garbage into strings. 
+//
+// Parameters   : 
+//			string       - The string you want to fill (char[])
+//          numOfSymbols - The num of garbage(In).
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void fillString(char string[], unsigned short numOfSymbols)
 {
 	unsigned short position = ZERO;
+
 	while (string[position] && position < numOfSymbols)
 	{
-		string[position] = '@';
+		string[position] = GARBAGE;
 		position++;
 	}
 	string[position] = '\0';
+	return;
 }
+
+//----------------------------------------------------------------------
+//                         Is Symbol On String
+//                         -------------------
+//
+// General      : This function checks if a symbol is on a string.
+//
+// Parameters   : 
+//			string   - A string (char[])
+//          symbol   - A symbol (char)
+//          position - The starting position to check from (In)
+//
+// Return Value : TRUE if the symbol is on the range, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isSymbolOnString(char string[], char symbol, unsigned short position)
+{
+	while (string[position] && string[position] != symbol)
+	{
+		position++;
+	}
+	return (string[position] == symbol);
+}
+
+//----------------------------------------------------------------------
+//                             Compare
+//                             -------
+//
+// General      : This function compares two strings.
+//
+// Parameters   : 
+//			stringOne - A string (char[])
+//          stringTwo - A symbol (char)
+//
+// Return Value : TRUE if the strings are the same, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN compare(char stringOne[], char stringTwo[])
+{
+	unsigned short position = ZERO;
+
+	while (stringOne[position] != '\0' && stringOne[position] == stringTwo[position])
+	{
+		position++;
+	}
+	return (stringOne[position] == stringTwo[position]);
+}
+
+//----------------------------------------------------------------------
+//                         Is Sub String On String
+//                         -----------------------
+//
+// General      : This function checks sub strings on a string.
+//
+// Parameters   : 
+//			string    - A string (char[])
+//          subString - A smaller string (char[])
+//
+// Return Value : TRUE if there is a sub string, else FALSE.
+//
+//----------------------------------------------------------------------
 
 BOOLEAN isSubStringOnString(char string[], char subString[])
 {
@@ -117,11 +292,9 @@ BOOLEAN isSubStringOnString(char string[], char subString[])
 	while (string[position] && !isSubStringOnString && subStringsAmount)
 	{
 		cutString(string, cuttedString, position);
-		printf("%s\n", cuttedString);
 		isSubStringOnString = compare(cuttedString, subString);
 		position++;
 		subStringsAmount--;
 	}
-
 	return (isSubStringOnString);
 }
