@@ -24,15 +24,19 @@
 
 int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
 
-unsigned short* digitsLength(int* ptrNum);
 
 BOOLEAN* isNumberEven(int* ptrNum);
 
 BOOLEAN* isNumberOdd(int* ptrNum);
 
-BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit);
+void isDigitOnNum(int* ptrNum, unsigned short* ptrDigit, BOOLEAN* isDigitOnNumber);
 
 void swap(int* ptrNumOne, int* ptrNumTwo);
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
 
+int* digitsLength(int* ptrNum);
+
+void flipNumber(int* ptrNum);
+
+void power(double *ptrNumber, int* ptrNumberOfTimes, double* answer);

@@ -28,10 +28,10 @@ int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
 	return &sum;
 }
 
-unsigned short* digitsLength(int* ptrNum)
+int* digitsLength(int* ptrNum)
 {
 	int tempNumber = *ptrNum;
-	unsigned short length = ZERO;
+	int length = ZERO;
 	for (; tempNumber; tempNumber /= TEN)
 	{
 		length++;
@@ -51,27 +51,85 @@ int* sumDigits(int* ptrNum)
 	return &sum;
 }
 
-BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
+void isDigitOnNum(int* ptrNum, unsigned short* ptrDigit, BOOLEAN* isDigitOnNumber)
 {
 	int tempNumber = *ptrNum;
-	BOOLEAN isDigitOnNum = FALSE;
 
-	for (; tempNumber && !isDigitOnNum; tempNumber /= TEN)
+	for (; tempNumber && !(*isDigitOnNumber); tempNumber /= TEN)
 	{
-		isDigitOnNum = (tempNumber == *ptrDigit) ? TRUE : FALSE;
+		*isDigitOnNumber = (tempNumber == *ptrDigit) ? TRUE : FALSE;
 	}
-	return &isDigitOnNum;
+	return;
 }
 
-void concatentionNumbers(int* ptrNumOne, int* ptrNumTwo)
+void power(double *ptrNumber, int* ptrNumberOfTimes, double* answer)
 {
-	int tempNumberTwo = *ptrNumTwo;
+	*answer = ONE;
+	int numberOfTimes = *ptrNumberOfTimes;
+	
+	for (numberOfTimes; numberOfTimes; numberOfTimes--)
+	{
+		*answer *= *ptrNumber;
+	}
+	
+	return;
 }
+
+void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo)
+{
+	int numTwoLength = *digitsLength(ptrNumTwo);
+	int flippedNumber = *ptrNumTwo;
+	flipNumber(&flippedNumber);
+
+	for (; flippedNumber; flippedNumber /= TEN)
+	{
+		*ptrNumOne = (*ptrNumOne) * (TEN) + (flippedNumber % TEN);
+	}
+
+	return;
+}
+
+void flipNumber(int* ptrNum)
+{
+	int flippedNumber = ZERO;
+
+	for (; (*ptrNum); (*ptrNum) /= TEN)
+	{
+		flippedNumber = flippedNumber * (TEN) + (*ptrNum) % (TEN);
+	}
+	*ptrNum = flippedNumber;
+
+	return;
+}
+
+void isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo, BOOLEAN* isNumOnNum)
+{
+	BOOLEAN isTrue = *isNumOnNum;
+	int tempNumber = *ptrNumOne;
+	unsigned short digit;
+
+	for (;tempNumber  && !isTrue ; tempNumber /= TEN)
+	{
+		isDigitOnNum(*ptrNumOne, &digit, &isTrue);
+		isDigitOnNum(*ptrNumTwo, &digit, &isTrue);
+	}
+
+	return;
+}
+
 
 
 void main(void)
 {
-	int number = 2184;
-	int numberTwo = 8;
-	printf("%d", *isDigitOnNum(&number, &numberTwo));
+	int number = 3817;
+	int numberTwo = 918;
+
+	BOOLEAN isNumberOnNum = FALSE;
+
+	double answer;
+	
+	isNumberOnNumber(&number, &numberTwo, &isNumberOnNum);
+
+	printf("%hu", isNumberOnNum);
+	scanf("%d", &number);
 }
