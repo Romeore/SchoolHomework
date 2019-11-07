@@ -18,25 +18,35 @@
 #define NINE       9
 #define TEN        10
 #define HUNDRED    100
-#define MAX(a,b)   (a > b) ? (a) : (b)
 
 #include <stdio.h>
-
-int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
-
 
 BOOLEAN* isNumberEven(int* ptrNum);
 
 BOOLEAN* isNumberOdd(int* ptrNum);
 
-void isDigitOnNum(int* ptrNum, unsigned short* ptrDigit, BOOLEAN* isDigitOnNumber);
+BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit);
+
+BOOLEAN* isNumberPrime(int* ptrNumber);
+
+int* convertToBaseTen(int* ptrNum, int* ptrBase);
+
+int* divideResult(int* ptrNum, int* ptrNumDivider);
+
+int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
+
+int* digitsLength(int* ptrNum);
+
+int* sumEvenDigits(int* ptrNum);
+
+int* sumOddDigits(int* ptrNum);
+
+int* makeOddDigitsNum(int* ptrNum);
 
 void swap(int* ptrNumOne, int* ptrNumTwo);
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
 
-int* digitsLength(int* ptrNum);
-
 void flipNumber(int* ptrNum);
 
-void power(double *ptrNumber, int* ptrNumberOfTimes, double* answer);
+void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer);
