@@ -219,8 +219,8 @@ int* sumEvenDigits(int* ptrNum)
 {
 	int sumEven = ZERO;
 	BOOLEAN isEven = *isNumberEven(digitsLength(ptrNum));
-	int tempNumber = (isEven) ? *ptrNum : *ptrNum * TEN; 
-	
+	int tempNumber = (isEven) ? *ptrNum : *ptrNum * TEN;
+
 	for (; tempNumber; tempNumber /= HUNDRED)
 	{
 		sumEven += tempNumber % TEN;
@@ -504,4 +504,171 @@ BOOLEAN* isNumberPrime(int* ptrNumber)
 	}
 
 	return (&isNumPrime);
+}
+
+//----------------------------------------------------------------------
+//                             Compare
+//                             -------
+//
+// General      : This function compares two strings.
+//
+// Parameters   : 
+//			stringOne - A pointer to string (char*)
+//          stringTwo - A pointer to string (char*)
+//
+// Return Value : TRUE if the strings are the same, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN compare(char* ptrStringOne, char* ptrStringTwo)
+{
+	while ((*ptrStringOne) == (*ptrStringTwo) && *ptrStringOne != '\0')
+	{
+		ptrStringOne++;
+		ptrStringTwo++;
+	}
+
+	return (*ptrStringOne == *ptrStringTwo);
+}
+
+void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace)
+{
+	while (*cuttedString != '\0')
+	{
+		*(cuttedString++) = *(ptrStringOne++ + startPlace);
+	}
+}
+
+void fillString(char* ptrString, unsigned short garbageLength)
+{
+	while (garbageLength--)
+	{
+		*ptrString = GARBAGE;
+		ptrString++;
+	}
+	*ptrString = '\0';
+}
+
+char* stringLastAddress(char* ptrEndString)
+{
+	while (*(++ptrEndString) != '\0');
+	return ptrEndString;
+}
+
+int stringLength(char* ptrStartString)
+{
+	char* ptrEndString = stringLastAddress(ptrStartString);
+	return (ptrEndString - ptrStartString);
+}
+
+BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString)
+{
+	int subStringLength = stringLength(ptrSubString);
+	int length = stringLength(ptrString);
+	int numOfLoops = length - subStringLength + ONE;
+	int position = ZERO;
+	BOOLEAN isTrue = FALSE;
+
+	char cuttedString[STRINGMAXSIZE];
+	char* ptrCuttedString = &(cuttedString[ZERO]);
+	fillString(&cuttedString, subStringLength);
+	
+	while (numOfLoops-- && !isTrue)
+	{
+		cutString(ptrString, ptrCuttedString, position);
+		isTrue = compare(ptrSubString, ptrCuttedString);
+		position++;
+	}
+
+	return (isTrue);
+}
+
+unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString)
+{
+	unsigned short subStringLength = stringLength(ptrSubString);
+	unsigned short length = stringLength(ptrString);
+	unsigned short numOfLoops = length - subStringLength + ONE;
+	unsigned short position = ZERO;
+	unsigned short sumOfSubStrings = ZERO;
+
+	char cuttedString[STRINGMAXSIZE];
+	char* ptrCuttedString = &(cuttedString[ZERO]);
+	fillString(&cuttedString, subStringLength);
+	
+	while (numOfLoops--)
+	{
+		cutString(ptrString, ptrCuttedString, position);
+		compare(ptrSubString, ptrCuttedString) ? sumOfSubStrings++ : sumOfSubStrings;
+		position++;
+	}
+
+	return (sumOfSubStrings);
+}
+
+BOOLEAN isSymbolOnString(char* ptrString, char symbol)
+{
+	while (*ptrString != '\0' && *ptrString != symbol)
+	{
+		ptrString++;
+	}
+	
+	return (*ptrString == symbol);
+}
+
+int sumSymbolOnString(char* ptrString, char symbol)
+{
+	int countSymbols = ZERO;
+
+	while (*ptrString != '\0')
+	{
+		(*ptrString == symbol) ? countSymbols++ : countSymbols;
+		ptrString++;
+	}
+	return (countSymbols);
+}
+
+int maxNumOfSymbolsOnString(char* ptrString)
+{
+	int tempNumber = ZERO;
+	int maxNumOfSymbols = sumSymbolOnString(ptrString, *ptrString);
+
+	while (*ptrString != '\0')
+	{
+		tempNumber = sumSymbolOnString(ptrString, *ptrString);
+		maxNumOfSymbols = (maxNumOfSymbols > tempNumber) ? maxNumOfSymbols : tempNumber;
+		ptrString++;
+	}
+
+	return (maxNumOfSymbols);
+}
+
+void clearString(char* ptrString){
+	char cleanedString[STRINGMAXSIZE];
+	char* ptrCleanedString = &(cleanedString[ZERO]);
+
+	while(ptrString++ != '\0')
+	{
+		(*ptrString != GARBAGE) ? (*(ptrCleanedString++) = *ptrString) : ptrString;
+	}
+}
+
+
+char itoa(int* num)
+{
+	return (char)(*num);
+}
+
+void main(void)
+{
+	typedef char STRING[STRINGMAXSIZE];
+
+	STRING stringOne = { 'A','D','@', 'D', '@', '@','B', 'C', 'A', 'B', 'A', 'L'};
+	STRING stringCutted = { 'A','B','C'};
+	STRING testString;
+	
+	int testNum = 119;
+
+	printf("%hu", isSymbolOnString(&stringOne, "L"));
+
+	scanf("%hu", &testNum);
 }

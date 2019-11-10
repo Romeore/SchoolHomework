@@ -18,6 +18,8 @@
 #define NINE       9
 #define TEN        10
 #define HUNDRED    100
+#define STRINGMAXSIZE 100
+#define GARBAGE '@'
 
 #include <stdio.h>
 
@@ -43,6 +45,12 @@ int* sumOddDigits(int* ptrNum);
 
 int* makeOddDigitsNum(int* ptrNum);
 
+int stringLength(char* ptrStartString);
+
+int sumSymbolOnString(char* ptrString, char symbol);
+
+int maxNumOfSymbolsOnString(char* ptrString);
+
 void swap(int* ptrNumOne, int* ptrNumTwo);
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
@@ -50,3 +58,17 @@ void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
 void flipNumber(int* ptrNum);
 
 void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer);
+
+void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace);
+
+void fillString(char* ptrString, unsigned short garbageLength);
+
+void clearString(char* ptrString);
+
+
+
+BOOLEAN compare(char* ptrStringOne, char* ptrStringTwo);
+
+BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString);
+
+char* stringLastAddress(char* ptrEndString);
