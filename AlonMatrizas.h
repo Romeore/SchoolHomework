@@ -1,3 +1,4 @@
+//AlonMatrizas.h
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -13,6 +14,8 @@
 #define FIVE       5
 #define SIX        6
 #define SEVEN      7
+#define EIGHT      8
+#define NINE       9
 #define TWENTY     (unsigned short)(20)
 #define TWENTYFIVE 25
 #define THIRTY     30
@@ -22,9 +25,36 @@
 #define ONEHUNDRED 100
 #define ABS(a)     (a < 0) ? -(a) : (a)
 #define MAX(a,b)   (a > b) ? (a) : (b)
-#define DIM        4
+#define DIM        3
+#define DIMONE     10
+#define DIMTWO     8
+
 #include <stdio.h>
 
-int sumRowInMatriza(int mat[][DIM], unsigned short row, unsigned short column);
+int sumRowInMatriza(short mat[][DIM], unsigned short row);
 
-int sumColumnInMatriza(int mat[][DIM], unsigned short row, unsigned short column);
+int sumColumnInMatriza(short mat[][DIM], unsigned short column);
+
+int sumMainCrossInMatriza(short mat[][DIM]);
+
+int sumSecondCrossInMatriza(short mat[][DIM]);
+
+short maxInMatriza(short mat[][DIM]);
+
+short minInMatriza(short mat[][DIM]);
+
+short sumSymbolInSecondCross(char mat[DIM][DIM], char symbol);
+
+short sumSymbolInMainCross(char mat[DIM][DIM], char symbol);
+
+short sumSymbolInRow(char mat[][DIM], short row, char symbol);
+
+short sumSymbolInColumn(char mat[][DIM], short column, char symbol);
+
+void printMatNums(short mat[][DIM]);
+
+void printMatChars(char mat[][DIM]);
+
+BOOLEAN isTwoNumbersSameInRow(short mat[][DIM], unsigned short row);
+
+BOOLEAN isTwoNumbersSameInColumn(short mat[][DIM], unsigned short column);
