@@ -449,8 +449,8 @@ BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
 
 
 //----------------------------------------------------------------------
-//                          isNumberOnNumber
-//                          ----------------
+//                          Is Number On Number
+//                          -------------------
 //
 // General      : This function checks if there is any similliar digits
 //
@@ -531,6 +531,20 @@ BOOLEAN compare(char* ptrStringOne, char* ptrStringTwo)
 	return (*ptrStringOne == *ptrStringTwo);
 }
 
+//----------------------------------------------------------------------
+//                             Cut String
+//                             ----------
+//
+// General      : This function cuts a string into a smaller one.
+//
+// Parameters   : 
+//			ptrStringOne - A pointer to string (char*)
+//          cuttedString - A pointer to save the cutted string (char*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace)
 {
 	while (*cuttedString != '\0')
@@ -538,6 +552,20 @@ void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace
 		*(cuttedString++) = *(ptrStringOne++ + startPlace);
 	}
 }
+
+//----------------------------------------------------------------------
+//                             Fill String
+//                             ----------
+//
+// General      : This function fills a string with garbage.
+//
+// Parameters   : 
+//			ptrString     - A pointer to string (char*)
+//          garbageLength - The number of times to fill the garabage. 
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void fillString(char* ptrString, unsigned short garbageLength)
 {
@@ -549,17 +577,58 @@ void fillString(char* ptrString, unsigned short garbageLength)
 	*ptrString = '\0';
 }
 
+//----------------------------------------------------------------------
+//                          String Last Address
+//                          -------------------
+//
+// General      : This function calculates the last address of string.
+//
+// Parameters   : 
+//			ptrEndString - A pointer to string (char*)
+//
+// Return Value : The pointer with an address of the last string.
+//
+//----------------------------------------------------------------------
+
 char* stringLastAddress(char* ptrEndString)
 {
 	while (*(++ptrEndString) != '\0');
 	return ptrEndString;
 }
 
+//----------------------------------------------------------------------
+//                          String Length
+//                          -------------
+//
+// General      : This function calculates length of an string.
+//
+// Parameters   : 
+//			ptrStartString - A pointer to string (char*)
+//
+// Return Value : The length of the string.
+//
+//----------------------------------------------------------------------
+
 int stringLength(char* ptrStartString)
 {
 	char* ptrEndString = stringLastAddress(ptrStartString);
 	return (ptrEndString - ptrStartString);
 }
+
+//----------------------------------------------------------------------
+//                      Is Sub String On String
+//                      -----------------------
+//
+// General      : This function checks if an substring on a string.
+//
+// Parameters   : 
+//			ptrString    - A pointer to a string (char*)
+//          ptrSubString - A pointer to a substring (char*)
+//
+// Return Value : Returns TRUE if the substring is on a string,
+//                else FALSE.
+//
+//----------------------------------------------------------------------
 
 BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString)
 {
@@ -572,7 +641,7 @@ BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString)
 	char cuttedString[STRINGMAXSIZE];
 	char* ptrCuttedString = &(cuttedString[ZERO]);
 	fillString(&cuttedString, subStringLength);
-	
+
 	while (numOfLoops-- && !isTrue)
 	{
 		cutString(ptrString, ptrCuttedString, position);
@@ -582,6 +651,21 @@ BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString)
 
 	return (isTrue);
 }
+
+//----------------------------------------------------------------------
+//                      Sum Sub String On String
+//                      -----------------------
+//
+// General      : This function calcualtes the num of sub strings 
+//                on string.
+//
+// Parameters   : 
+//			ptrString    - A pointer to a string (char*)
+//          ptrSubString - A pointer to a substring (char*)
+//
+// Return Value : Returns the sum of sub strings that fit to the string.
+//
+//----------------------------------------------------------------------
 
 unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString)
 {
@@ -594,7 +678,7 @@ unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString)
 	char cuttedString[STRINGMAXSIZE];
 	char* ptrCuttedString = &(cuttedString[ZERO]);
 	fillString(&cuttedString, subStringLength);
-	
+
 	while (numOfLoops--)
 	{
 		cutString(ptrString, ptrCuttedString, position);
@@ -605,15 +689,44 @@ unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString)
 	return (sumOfSubStrings);
 }
 
+//----------------------------------------------------------------------
+//                      Is Symbol On String
+//                      -------------------
+//
+// General      : This function checks if an symbol is on a string.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//          symbol    - A symbol (char)
+//
+// Return Value : Returns TRUE if the symbol is on the string, 
+//                else FALSE.
+//
+//----------------------------------------------------------------------
+
 BOOLEAN isSymbolOnString(char* ptrString, char symbol)
 {
 	while (*ptrString != '\0' && *ptrString != symbol)
 	{
 		ptrString++;
 	}
-	
+
 	return (*ptrString == symbol);
 }
+
+//----------------------------------------------------------------------
+//                      Sum Symbol On String
+//                      --------------------
+//
+// General      : This function sums a symbol on a string.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//          symbol    - A symbol (char)
+//
+// Return Value : Returns the number of parmaeter symbol on the string.
+//
+//----------------------------------------------------------------------
 
 int sumSymbolOnString(char* ptrString, char symbol)
 {
@@ -626,6 +739,19 @@ int sumSymbolOnString(char* ptrString, char symbol)
 	}
 	return (countSymbols);
 }
+
+//----------------------------------------------------------------------
+//                    Max Num Of Symbols On String
+//                    ----------------------------
+//
+// General      : This function finds the maximum of a repeating symbol.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//
+// Return Value : Returns the number of max repeating symbol.
+//
+//----------------------------------------------------------------------
 
 int maxNumOfSymbolsOnString(char* ptrString)
 {
@@ -642,16 +768,112 @@ int maxNumOfSymbolsOnString(char* ptrString)
 	return (maxNumOfSymbols);
 }
 
-void clearString(char* ptrString){
+//----------------------------------------------------------------------
+//                            Clear String
+//                            ------------
+//
+// General      : This function clears a string.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void clearString(char* ptrString) {
 	char cleanedString[STRINGMAXSIZE];
 	char* ptrCleanedString = &(cleanedString[ZERO]);
 
-	while(ptrString++ != '\0')
+	while (ptrString++ != '\0')
 	{
 		(*ptrString != GARBAGE) ? (*(ptrCleanedString++) = *ptrString) : ptrString;
 	}
 }
 
+//----------------------------------------------------------------------
+//                      Delete Symbol From String
+//                      -------------------------
+//
+// General      : This function deletes a symbol on a string.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//          symbol    - A symbol to delete (char)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteSymbolFromString(char* ptrString, char symbol)
+{
+	while (*ptrString != '\0')
+	{
+		(*ptrString) = (*ptrString == symbol) ? GARBAGE : *ptrString;
+		ptrString++;
+	}
+	return;
+}
+
+//----------------------------------------------------------------------
+//                      Delete String From String
+//                      -------------------------
+//
+// General      : This function deletes a string on a string.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//          ptrDeleteFromString  - A pointer ot a string to delete
+//                                 from the string. (char)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteStringFromString(char* ptrString, char* ptrDeleteFromString)
+{
+	while (*ptrDeleteFromString != '\0')
+	{
+		deleteSymbolFromString(ptrString, *ptrDeleteFromString);
+		ptrDeleteFromString++;
+	}
+	return;
+}
+
+//----------------------------------------------------------------------
+//                    Sum Delete String From String
+//                    -----------------------------
+//
+// General      : This function deletes a string from a string and sums
+//                the amount that have been deleted.
+//
+// Parameters   : 
+//			ptrString - A pointer to a string (char*)
+//          ptrDeleteFromString  - A pointer ot a string to delete
+//                                 from the string. (char)
+//
+// Return Value : The num of symbols that have been deleted.
+//
+//----------------------------------------------------------------------
+
+int sumDeleteStringFromString(char* ptrString, char* ptrDeleteFromString)
+{
+	deleteStringFromString(ptrString, ptrDeleteFromString);
+	return (sumSymbolOnString(ptrString, GARBAGE));
+}
+
+//----------------------------------------------------------------------
+//                                itoa
+//                                ----
+//
+// General      : This function converts from int to ascii code.
+//
+// Parameters   : 
+//			num - A pointer to a number (int*)
+//
+// Return Value : The char in ascii code.
+//
+//----------------------------------------------------------------------
 
 char itoa(int* num)
 {
@@ -662,13 +884,14 @@ void main(void)
 {
 	typedef char STRING[STRINGMAXSIZE];
 
-	STRING stringOne = { 'A','D','@', 'D', '@', '@','B', 'C', 'A', 'B', 'A', 'L'};
-	STRING stringCutted = { 'A','B','C'};
+	STRING stringOne = { 'A','K','K', 'C', 'V'};
+	STRING stringCutted = { 'K','C','V'};
 	STRING testString;
-	
+
 	int testNum = 119;
 
-	printf("%hu", isSymbolOnString(&stringOne, "L"));
+	
+	printf("%d", sumDeleteStringFromString(&stringOne, &stringCutted));
 
 	scanf("%hu", &testNum);
 }
