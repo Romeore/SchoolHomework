@@ -47,8 +47,6 @@ int* divideResult(int* ptrNum, int* ptrNumDivider);
 
 int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
 
-int* digitsLength(int* ptrNum);
-
 int* sumEvenDigits(int* ptrNum);
 
 int* sumOddDigits(int* ptrNum);
@@ -90,5 +88,7 @@ char itoa(int* num);
 // NEW
 
 char* lastAddressWordFromString(char* ptrLastAddressWord);
+
+int digitsLength(int* ptrNum);
 
 BOOLEAN isNumberEven(int* ptrNum);

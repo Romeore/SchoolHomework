@@ -26,10 +26,12 @@ int* evenSubArrayDynamic(int vec[], int len, int* ptrEven);
 
 int* oddSubArrayDynamic(int vec[], int len, int* ptrOdd);
 
+void printIntArrayDynamic(int* ptrDynamicArray, int length);
+
 void oddEvenSubArraysDynamic(int vec[], int** even, int* evenSize, int** odd, int* oddSize, int arrayLength);
 
 void addNumberToArrayDynamic(int* ptrArray, int arrayLength, int number);
 
 void cutStringDynamic(char* ptrCuttedString, char* ptrCutStringStart, int numToCut);
 
-void searchLongestWordDynamic(char string[], char* ptrMaxLen);
+void searchLongestWordDynamic(char string[], char** ptrMaxLen);

@@ -3,64 +3,69 @@
 
 #include "AlonDynamic.h"
 
+void printIntArrayDynamic(int* ptrDynamicArray, int length)
+{
+	for (; length; length--)
+	{
+		printf("%d\n", *(ptrDynamicArray++));
+	}
+}
+
 int* evenSubArrayDynamic(int vec[], int len, int* ptrEven)
 {
 	int* ptrStartSubArray = (int)malloc(sizeof(int));
-	int* ptrEvenSubArray = ptrStartSubArray;
 
 	if (ptrStartSubArray == NULL)
 	{
 		return ptrEven;
 	}
 
-	for (; len; len--)
+	for (len--; len; len--)
 	{
-		if (isNumberEven(vec[len]))
+		if (vec[len] % TWO == ZERO)
 		{
-			ptrStartSubArray = (int)realloc(++(*ptrEven), sizeof(int));
-			*(ptrEvenSubArray++) = vec[len];
+			ptrStartSubArray = (int)realloc(ptrStartSubArray,sizeof(int) * ++(*ptrEven));
+			*(ptrStartSubArray+ *ptrEven - ONE) = vec[len];
 		}
 	}
-	free(ptrEvenSubArray);
 	return (ptrStartSubArray);
 }
 
 int* oddSubArrayDynamic(int vec[], int len, int* ptrOdd)
 {
 	int* ptrStartSubArray = (int)malloc(sizeof(int));
-	int* ptrOddSubArray = ptrStartSubArray;
-
+	
 	if (ptrStartSubArray == NULL)
 	{
 		return ptrOdd;
 	}
 
-	for (; len; len--)
+	for (len--; len; len--)
 	{
-		if (!isNumberEven(vec[len]))
+		if (vec[len] % TWO != ZERO)
 		{
-			ptrStartSubArray = (int)realloc(++(*ptrOdd), sizeof(int));
-			*(ptrOddSubArray++) = vec[len];
+			ptrStartSubArray = (int)realloc(ptrStartSubArray, sizeof(int) * ++(*ptrOdd));
+			*(ptrStartSubArray + *ptrOdd - ONE) = vec[len];
 		}
 	}
-	free(ptrOddSubArray);
 	return (ptrStartSubArray);
 }
 
 void oddEvenSubArraysDynamic(int vec[], int** even, int* evenSize, int** odd, int* oddSize, int arrayLength)
 {
-	even = evenSubArray(vec, arrayLength, evenSize);
-	odd = oddSubArray(vec, arrayLength, oddSize);
+	even = evenSubArrayDynamic(vec, arrayLength, evenSize);
+	odd = oddSubArrayDynamic(vec, arrayLength, oddSize);
 
-	free(even);
-	free(odd);
+	return;
 }
 
 void addNumberToArrayDynamic(int* ptrArray, int arrayLength, int number)
 {
 	int numberLength = digitsLength(&number);
-
-	ptrArray = (int)realloc(numberLength + arrayLength, sizeof(int));
+	int tempNumber = number;
+	int powerNum;
+	double tenNumber = TEN;
+	ptrArray = (int)realloc(ptrArray, (numberLength + arrayLength) * sizeof(int));
 
 	if (ptrArray == NULL)
 	{
@@ -69,10 +74,12 @@ void addNumberToArrayDynamic(int* ptrArray, int arrayLength, int number)
 
 	for (; numberLength; numberLength--)
 	{
-		*(++ptrArray) = number / (int)(power(TEN, numberLength));
+		powerNum = (power(&tenNumber, numberLength - ONE));
+		tempNumber = number / powerNum;
+		*(ptrArray++ + arrayLength) = tempNumber;
+		number -= tempNumber * powerNum;
 	}
 
-	free(ptrArray);
 	return;
 }
 
@@ -80,7 +87,8 @@ void cutStringDynamic(char* ptrCuttedString, char* ptrCutStringStart, int numToC
 {
 	int countCuttedString = ZERO;
 
-	ptrCuttedString = (char)realloc(numToCut , sizeof(char));
+	ptrCuttedString = (char)realloc(ptrCuttedString, (3 * sizeof(char)));
+
 	if (ptrCuttedString == NULL)
 	{
 		return;
@@ -88,32 +96,33 @@ void cutStringDynamic(char* ptrCuttedString, char* ptrCutStringStart, int numToC
 
 	for (; countCuttedString < numToCut; countCuttedString++)
 	{
-		*(ptrCuttedString++) = *(ptrCutStringStart++);
+		*(ptrCuttedString + countCuttedString) = *(ptrCutStringStart + countCuttedString);
 	}
 
-	*(++ptrCuttedString) = '\0';
+	*(ptrCuttedString) = '\0';
 
-	free(ptrCuttedString);
+	return;
 }
 
-void searchLongestWordDynamic(char string[], char* ptrMaxLen)
+void searchLongestWordDynamic(char string[], char** ptrMaxLen)
 {
 	int   maxWordLength = ZERO;
 	char* ptrString = &(string[ZERO]);
 	char* ptrTempLastWord;
+	char* ptrMaxWord;
 
-	while (ptrString != '\0')
+	while ((*ptrString) != '\0')
 	{
 		ptrTempLastWord = lastAddressWordFromString(ptrString);
-		if (ptrTempLastWord - ptrString > maxWordLength)
+		if ((ptrTempLastWord - ptrString - ONE) > maxWordLength)
 		{
-			maxWordLength = ptrTempLastWord - ptrString;
-			cutStringDynamic(ptrMaxLen, ptrString, maxWordLength);
+			maxWordLength = ptrTempLastWord - ptrString - ONE;
+			ptrMaxWord = ptrString;
 		}
 		ptrString = ptrTempLastWord;
 	}
-
-	free(ptrMaxLen);
+	
+	return;
 }
 
 void orderStrings(char** names, int namesLength)

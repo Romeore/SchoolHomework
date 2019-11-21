@@ -20,7 +20,7 @@
 
 BOOLEAN isNumberEven(int* ptrNum)
 {
-	return (*ptrNum % TWO);
+	return (*ptrNum % TWO == ZERO);
 }
 
 //----------------------------------------------------------------------
@@ -77,11 +77,11 @@ int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
 //			ptrNum - A pointer (In)
 //					
 //
-// Return Value : A pointer with a value of the number's length.
+// Return Value : The number length.
 //
 //----------------------------------------------------------------------
 
-int* digitsLength(int* ptrNum)
+int digitsLength(int* ptrNum)
 {
 	int tempNumber = *ptrNum;
 	int length = ZERO;
@@ -90,7 +90,7 @@ int* digitsLength(int* ptrNum)
 	{
 		length++;
 	}
-	return (&length);
+	return (length);
 }
 
 //----------------------------------------------------------------------
@@ -329,7 +329,6 @@ int* makeOddDigitsNum(int* ptrNum)
 double power(double* ptrNumber, int numberOfTimes)
 {
 	double answer = ONE;
-	int numberOfTimes = numberOfTimes;
 
 	for (; numberOfTimes; numberOfTimes--)
 	{
@@ -355,7 +354,7 @@ double power(double* ptrNumber, int numberOfTimes)
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo)
 {
-	int numTwoLength = *digitsLength(ptrNumTwo);
+	int numTwoLength = digitsLength(ptrNumTwo);
 	int flippedNumber = *ptrNumTwo;
 	flipNumber(&flippedNumber);
 
@@ -383,7 +382,7 @@ void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo)
 
 void copy(char* ptrNumOne, char* ptrNumTwo)
 {
-	int numTwoLength = *digitsLength(ptrNumTwo);
+	int numTwoLength = digitsLength(ptrNumTwo);
 	int flippedNumber = *ptrNumTwo;
 	flipNumber(&flippedNumber);
 
@@ -941,8 +940,22 @@ BOOLEAN isStringASubStringOnMatriza(char* ptrMatriza)
 	return (isTrue);
 }
 
+//----------------------------------------------------------------------
+//                         Last Address Word From String
+//                         -----------------------------
+//
+// General      : This function finds the first word on string.
+//
+// Parameters   : 
+//			ptrLastAddressWord - A pointer to a string (char*)
+//
+// Return Value : Returns the address of the finish of the
+//                first word on a string.
+//
+//----------------------------------------------------------------------
+
 char* lastAddressWordFromString(char* ptrLastAddressWord)
 {
 	while (*(ptrLastAddressWord++) != GARBAGE);
-	return ptrLastAddressWord;
+	return (ptrLastAddressWord);
 }
