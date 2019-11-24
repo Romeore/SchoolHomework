@@ -18,11 +18,9 @@
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isNumberEven(int* ptrNum)
+BOOLEAN isNumberEven(int* ptrNum)
 {
-	BOOLEAN isNumberEven = *ptrNum % TWO;
-
-	return (&isNumberEven);
+	return (*ptrNum % TWO == ZERO);
 }
 
 //----------------------------------------------------------------------
@@ -79,11 +77,11 @@ int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
 //			ptrNum - A pointer (In)
 //					
 //
-// Return Value : A pointer with a value of the number's length.
+// Return Value : The number length.
 //
 //----------------------------------------------------------------------
 
-int* digitsLength(int* ptrNum)
+int digitsLength(int* ptrNum)
 {
 	int tempNumber = *ptrNum;
 	int length = ZERO;
@@ -92,7 +90,7 @@ int* digitsLength(int* ptrNum)
 	{
 		length++;
 	}
-	return (&length);
+	return (length);
 }
 
 //----------------------------------------------------------------------
@@ -218,7 +216,7 @@ int* convertToBaseTen(int* ptrNum, int* ptrBase)
 int* sumEvenDigits(int* ptrNum)
 {
 	int sumEven = ZERO;
-	BOOLEAN isEven = *isNumberEven(digitsLength(ptrNum));
+	BOOLEAN isEven = isNumberEven(digitsLength(ptrNum));
 	int tempNumber = (isEven) ? *ptrNum : *ptrNum * TEN;
 
 	for (; tempNumber; tempNumber /= HUNDRED)
@@ -245,7 +243,7 @@ int* sumEvenDigits(int* ptrNum)
 int* makeEvenDigitsNum(int* ptrNum)
 {
 	int newNumber = ZERO;
-	BOOLEAN isEven = *isNumberEven(digitsLength(ptrNum));
+	BOOLEAN isEven = isNumberEven(digitsLength(ptrNum));
 	int tempNumber = *ptrNum;
 	flipNumber(&tempNumber);
 	(isEven) ? (tempNumber) : (tempNumber /= TEN);
@@ -328,17 +326,16 @@ int* makeOddDigitsNum(int* ptrNum)
 //
 //----------------------------------------------------------------------
 
-void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer)
+double power(double* ptrNumber, int numberOfTimes)
 {
-	*answer = ONE;
-	int numberOfTimes = *ptrNumberOfTimes;
+	double answer = ONE;
 
-	for (numberOfTimes; numberOfTimes; numberOfTimes--)
+	for (; numberOfTimes; numberOfTimes--)
 	{
-		*answer *= *ptrNumber;
+		answer *= *ptrNumber;
 	}
 
-	return;
+	return (answer);
 }
 
 //----------------------------------------------------------------------
@@ -357,7 +354,35 @@ void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer)
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo)
 {
-	int numTwoLength = *digitsLength(ptrNumTwo);
+	int numTwoLength = digitsLength(ptrNumTwo);
+	int flippedNumber = *ptrNumTwo;
+	flipNumber(&flippedNumber);
+
+	for (; flippedNumber; flippedNumber /= TEN)
+	{
+		*ptrNumOne = (*ptrNumOne) * (TEN)+(flippedNumber % TEN);
+	}
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                                 Copy
+//                                 ----
+//
+// General      : This function copies two strings into one.
+//
+// Parameters   : 
+//			ptrNumOne - A pointer. (In)
+//			ptrNumTwo - A pointer. (In)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void copy(char* ptrNumOne, char* ptrNumTwo)
+{
+	int numTwoLength = digitsLength(ptrNumTwo);
 	int flippedNumber = *ptrNumTwo;
 	flipNumber(&flippedNumber);
 
@@ -880,18 +905,57 @@ char itoa(int* num)
 	return (char)(*num);
 }
 
-void main(void)
+//----------------------------------------------------------------------
+//                          isStringAsSubStringOnMatriza
+//                          ----------------------------
+//
+// General      : This function checks if a string on matriza is a 
+//                sub string of another string on the matriza.
+//
+// Parameters   : 
+//			ptrMatriza - A pointer to matriza of strings (char*)
+//
+// Return Value : Returns TRUE if there is a string that is another 
+//                string's substring, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isStringASubStringOnMatriza(char* ptrMatriza)
 {
-	typedef char STRING[STRINGMAXSIZE];
+	char* ptrMatLastAddress = ptrMatriza + MAXSIZECOL * MAXSIZEROW;
+	char* tempPointer;
+	char* tempString = ptrMatriza;
+	BOOLEAN isTrue = FALSE;
 
-	STRING stringOne = { 'A','K','K', 'C', 'V'};
-	STRING stringCutted = { 'K','C','V'};
-	STRING testString;
+	while (ptrMatriza++ != ptrMatLastAddress && !isTrue)
+	{
+		*tempString = *ptrMatriza;
+		tempPointer = ptrMatriza + ONE;
+		while (tempPointer++ != ptrMatLastAddress && !isTrue)
+		{
+			isTrue = isSubStringOnString(tempString, tempPointer) ? TRUE : isTrue;
+		}
+	}
 
-	int testNum = 119;
+	return (isTrue);
+}
 
-	
-	printf("%d", sumDeleteStringFromString(&stringOne, &stringCutted));
+//----------------------------------------------------------------------
+//                         Last Address Word From String
+//                         -----------------------------
+//
+// General      : This function finds the first word on string.
+//
+// Parameters   : 
+//			ptrLastAddressWord - A pointer to a string (char*)
+//
+// Return Value : Returns the address of the finish of the
+//                first word on a string.
+//
+//----------------------------------------------------------------------
 
-	scanf("%hu", &testNum);
+char* lastAddressWordFromString(char* ptrLastAddressWord)
+{
+	while (*(ptrLastAddressWord++) != GARBAGE);
+	return (ptrLastAddressWord);
 }

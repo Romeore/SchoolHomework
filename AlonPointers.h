@@ -17,13 +17,16 @@
 #define EIGHT         8
 #define NINE          9
 #define TEN           10
+#define SIXTEEN       16
+#define TWENTYFIVE    25
 #define HUNDRED       100
 #define STRINGMAXSIZE 100
 #define GARBAGE       '@'
+#define MAXSIZEROW    5
+#define MAXSIZECOL    5
+#define DIM           3
 
 #include <stdio.h>
-
-BOOLEAN* isNumberEven(int* ptrNum);
 
 BOOLEAN* isNumberOdd(int* ptrNum);
 
@@ -37,13 +40,13 @@ BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString);
 
 BOOLEAN isSymbolOnString(char* ptrString, char symbol);
 
+BOOLEAN isStringASubStringOnMatriza(char* ptrMatriza);
+
 int* convertToBaseTen(int* ptrNum, int* ptrBase);
 
 int* divideResult(int* ptrNum, int* ptrNumDivider);
 
 int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
-
-int* digitsLength(int* ptrNum);
 
 int* sumEvenDigits(int* ptrNum);
 
@@ -59,6 +62,8 @@ int maxNumOfSymbolsOnString(char* ptrString);
 
 int sumDeleteStringFromString(char* ptrString, char* ptrDeleteFromString);
 
+double power(double* ptrNumber, int numberOfTimes);
+
 unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString);
 
 void swap(int* ptrNumOne, int* ptrNumTwo);
@@ -66,8 +71,6 @@ void swap(int* ptrNumOne, int* ptrNumTwo);
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
 
 void flipNumber(int* ptrNum);
-
-void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer);
 
 void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace);
 
@@ -82,3 +85,12 @@ void deleteSymbolFromString(char* ptrString, char symbol);
 char* stringLastAddress(char* ptrEndString);
 
 char itoa(int* num);
+
+// NEW
+
+char* lastAddressWordFromString(char* ptrLastAddressWord);
+
+int digitsLength(int* ptrNum);
+
+BOOLEAN isNumberEven(int* ptrNum);
+
