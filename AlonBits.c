@@ -1,7 +1,7 @@
-//BitsFunctions.c
+//AlonBits.c
 #pragma once
 
-#include "BitsFunctions.h"
+#include "AlonBits.h"
 
 //----------------------------------------------------------------------
 //                          Is Num Even Bit
@@ -24,7 +24,7 @@ BOOLEAN isNumEvenBit(int* ptrNumber)
 
 //----------------------------------------------------------------------
 //                           Is Num Odd Bit
-//                        ss   --------------
+//                           --------------
 //
 // General      : This function checks if a number is odd.
 //

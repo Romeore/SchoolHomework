@@ -1,4 +1,4 @@
-//BitsFunctions.h
+//AlonBits.h
 #pragma once
 
 #include "AlonPointers.h"
