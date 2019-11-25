@@ -23,8 +23,8 @@ BOOLEAN isNumEvenBit(int* ptrNumber)
 }
 
 //----------------------------------------------------------------------
-//                          Is Num Odd Bit
-//                          ----------------
+//                           Is Num Odd Bit
+//                        ss   --------------
 //
 // General      : This function checks if a number is odd.
 //
@@ -56,7 +56,7 @@ BOOLEAN isNumOddBit(int* ptrNumber)
 int calculateBits(int place)
 {
 	double two = TWO;
-	return power(&two, place);
+	return (power(&two, place));
 }
 
 //----------------------------------------------------------------------
@@ -73,16 +73,43 @@ int calculateBits(int place)
 //
 //----------------------------------------------------------------------
 
-void rotateNumber(unsigned int* ptrNumber, int numOfTimes)
+void rotateNumberBit(unsigned int* ptrNumber, int numOfTimes)
 {
 	unsigned int saveDigit;
 
 	for (; numOfTimes; numOfTimes--)
 	{
-		saveDigit = ((*ptrNumber >> (sizeof(int) * EIGHT - ONE))& ONE);
+		saveDigit = ((*ptrNumber >> (INTNUMOFBITS - ONE))& ONE);
 		*ptrNumber = *ptrNumber << ONE;
 
 		*ptrNumber += saveDigit;
 	}
 	return;
+}
+
+//----------------------------------------------------------------------
+//                       Is Number Has Even Bits
+//                       -----------------------
+//
+// General      : This function checks if a number has even bits.
+//
+// Parameters   : 
+//			ptrNumber - A pointer. (In)
+//
+// Return Value : Returns TRUE if the bits are even, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isNumberHasEvenBits(int* ptrNumber)
+{
+	int counter = ZERO;
+	int numOfOnes = ZERO;
+
+	for (counter; counter < INTNUMOFBITS; counter++)
+	{
+		isNumberEven(ptrNumber) ? numOfOnes++ : numOfOnes;
+		rotateNumberBit(ptrNumber, ONE);
+	}
+
+	return isNumberEven(&numOfOnes);
 }
