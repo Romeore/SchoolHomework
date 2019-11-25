@@ -17,19 +17,22 @@
 #define EIGHT         8
 #define NINE          9
 #define TEN           10
+#define SIXTEEN       16
+#define TWENTYFIVE    25
 #define HUNDRED       100
 #define STRINGMAXSIZE 100
 #define GARBAGE       '@'
+#define MAXSIZEROW    5
+#define MAXSIZECOL    5
+#define DIM           3
 
 #include <stdio.h>
 
-BOOLEAN* isNumberEven(int* ptrNum);
+BOOLEAN isDigitOnNum(int* ptrNum, unsigned short* ptrDigit);
 
-BOOLEAN* isNumberOdd(int* ptrNum);
+BOOLEAN isNumberPrime(int* ptrNumber);
 
-BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit);
-
-BOOLEAN* isNumberPrime(int* ptrNumber);
+BOOLEAN isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo);
 
 BOOLEAN compare(char* ptrStringOne, char* ptrStringTwo);
 
@@ -37,19 +40,25 @@ BOOLEAN isSubStringOnString(char* ptrString, char* ptrSubString);
 
 BOOLEAN isSymbolOnString(char* ptrString, char symbol);
 
-int* convertToBaseTen(int* ptrNum, int* ptrBase);
+BOOLEAN isStringASubStringOnMatriza(char* ptrMatriza);
 
-int* divideResult(int* ptrNum, int* ptrNumDivider);
+BOOLEAN isNumberEven(int* ptrNum);
 
-int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
+BOOLEAN isNumberOdd(int* ptrNum);
 
-int* digitsLength(int* ptrNum);
+int convertToBaseTen(int* ptrNum, int* ptrBase);
 
-int* sumEvenDigits(int* ptrNum);
+int divideResult(int* ptrNum, int* ptrNumDivider);
 
-int* sumOddDigits(int* ptrNum);
+int sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo);
 
-int* makeOddDigitsNum(int* ptrNum);
+int sumEvenDigits(int* ptrNum);
+
+int sumOddDigits(int* ptrNum);
+
+int digitsLength(int* ptrNum);
+
+int makeOddDigitsNum(int* ptrNum);
 
 int stringLength(char* ptrStartString);
 
@@ -59,15 +68,11 @@ int maxNumOfSymbolsOnString(char* ptrString);
 
 int sumDeleteStringFromString(char* ptrString, char* ptrDeleteFromString);
 
-unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString);
-
 void swap(int* ptrNumOne, int* ptrNumTwo);
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo);
 
 void flipNumber(int* ptrNum);
-
-void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer);
 
 void cutString(char* ptrStringOne, char* cuttedString, unsigned short startPlace);
 
@@ -82,3 +87,9 @@ void deleteSymbolFromString(char* ptrString, char symbol);
 char* stringLastAddress(char* ptrEndString);
 
 char itoa(int* num);
+
+char* lastAddressWordFromString(char* ptrLastAddressWord);
+
+double power(double* ptrNumber, int numberOfTimes);
+
+unsigned short sumSubStringsOnString(char* ptrString, char* ptrSubString);

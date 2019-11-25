@@ -18,11 +18,9 @@
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isNumberEven(int* ptrNum)
+BOOLEAN isNumberEven(int* ptrNum)
 {
-	BOOLEAN isNumberEven = *ptrNum % TWO;
-
-	return (&isNumberEven);
+	return (*ptrNum % TWO == ZERO);
 }
 
 //----------------------------------------------------------------------
@@ -35,16 +33,13 @@ BOOLEAN* isNumberEven(int* ptrNum)
 //			ptrNum - A pointer (In)
 //					
 //
-// Return Value : A pointer with TRUE value if the number is odd, else
-//                value is FALSE.
+// Return Value : returns TRUE if the number is odd, else FALSE.
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isNumberOdd(int* ptrNum)
+BOOLEAN isNumberOdd(int* ptrNum)
 {
-	BOOLEAN isNumberOdd = !(*ptrNum % TWO);
-
-	return (&isNumberOdd);
+	return (!(*ptrNum % TWO));
 }
 
 //----------------------------------------------------------------------
@@ -58,15 +53,13 @@ BOOLEAN* isNumberOdd(int* ptrNum)
 //			ptrNumTwo - A pointer (In)
 //					
 //
-// Return Value : A pointer with the sum of the values of the pointers.
+// Return Value : The sum of two numbers.
 //
 //----------------------------------------------------------------------
 
-int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
+int sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
 {
-	int sum = *ptrNumOne + *ptrNumTwo;
-
-	return (&sum);
+	return (*ptrNumOne + *ptrNumTwo);
 }
 
 //----------------------------------------------------------------------
@@ -79,11 +72,11 @@ int* sumTwoNumbers(int* ptrNumOne, int* ptrNumTwo)
 //			ptrNum - A pointer (In)
 //					
 //
-// Return Value : A pointer with a value of the number's length.
+// Return Value : The number length.
 //
 //----------------------------------------------------------------------
 
-int* digitsLength(int* ptrNum)
+int digitsLength(int* ptrNum)
 {
 	int tempNumber = *ptrNum;
 	int length = ZERO;
@@ -92,7 +85,7 @@ int* digitsLength(int* ptrNum)
 	{
 		length++;
 	}
-	return (&length);
+	return (length);
 }
 
 //----------------------------------------------------------------------
@@ -131,12 +124,12 @@ int* sumDigits(int* ptrNum)
 //			ptrNum       - A pointer (In)
 //			ptrNumDivide - A pointer (In)		
 //
-// Return Value : A pointer with a value of the result of the divide,
+// Return Value : number with a value of the result of the divide,
 //                if divider is 0, return -1.
 //
 //----------------------------------------------------------------------
 
-int* divideResult(int* ptrNum, int* ptrNumDivider)
+int divideResult(int* ptrNum, int* ptrNumDivider)
 {
 	int tempNumber = *ptrNum;
 	int result = ZERO;
@@ -148,7 +141,7 @@ int* divideResult(int* ptrNum, int* ptrNumDivider)
 
 	result = (*ptrNumDivider == ZERO) ? -1 : result;
 
-	return (&result);
+	return (result);
 }
 
 //----------------------------------------------------------------------
@@ -182,12 +175,12 @@ int* divideLeftOver(int* ptrNum, int* ptrNumDivider)
 //			ptrNum  - A pointer with the number value. (In)
 //			ptrBase - A pointer with the base value. (In)		
 //
-// Return Value : A pointer with a value of the number converted
+// Return Value : A number with a value of the number converted
 //                to base 10.
 //
 //----------------------------------------------------------------------
 
-int* convertToBaseTen(int* ptrNum, int* ptrBase)
+int convertToBaseTen(int* ptrNum, int* ptrBase)
 {
 	int baseTenNum = ZERO;
 	int multiBaseCounter = ONE;
@@ -199,7 +192,7 @@ int* convertToBaseTen(int* ptrNum, int* ptrBase)
 		multiBaseCounter *= *ptrBase;
 	}
 
-	return (&baseTenNum);
+	return (baseTenNum);
 }
 
 //----------------------------------------------------------------------
@@ -211,14 +204,14 @@ int* convertToBaseTen(int* ptrNum, int* ptrBase)
 // Parameters   : 
 //			ptrNum - A pointer. (In)
 //
-// Return Value : A pointer with the sum of all even digits on the num. 
+// Return Value : A number with the sum of all even digits on the num. 
 //
 //----------------------------------------------------------------------
 
-int* sumEvenDigits(int* ptrNum)
+int sumEvenDigits(int* ptrNum)
 {
 	int sumEven = ZERO;
-	BOOLEAN isEven = *isNumberEven(digitsLength(ptrNum));
+	BOOLEAN isEven = isNumberEven(digitsLength(ptrNum));
 	int tempNumber = (isEven) ? *ptrNum : *ptrNum * TEN;
 
 	for (; tempNumber; tempNumber /= HUNDRED)
@@ -226,7 +219,7 @@ int* sumEvenDigits(int* ptrNum)
 		sumEven += tempNumber % TEN;
 	}
 
-	return (&sumEven);
+	return (sumEven);
 }
 
 //----------------------------------------------------------------------
@@ -245,7 +238,7 @@ int* sumEvenDigits(int* ptrNum)
 int* makeEvenDigitsNum(int* ptrNum)
 {
 	int newNumber = ZERO;
-	BOOLEAN isEven = *isNumberEven(digitsLength(ptrNum));
+	BOOLEAN isEven = isNumberEven(digitsLength(ptrNum));
 	int tempNumber = *ptrNum;
 	flipNumber(&tempNumber);
 	(isEven) ? (tempNumber) : (tempNumber /= TEN);
@@ -267,14 +260,14 @@ int* makeEvenDigitsNum(int* ptrNum)
 // Parameters   : 
 //			ptrNum  - A pointer. (In)
 //
-// Return Value : A pointer with the sum of all odd digits on the num. 
+// Return Value : A number with the sum of all odd digits on the num. 
 //
 //----------------------------------------------------------------------
 
-int* sumOddDigits(int* ptrNum)
+int sumOddDigits(int* ptrNum)
 {
 	int sumOdd = ZERO;
-	BOOLEAN isOdd = *isNumberOdd(digitsLength(ptrNum));
+	BOOLEAN isOdd = isNumberOdd(digitsLength(ptrNum));
 	int tempNumber = (isOdd) ? *ptrNum : *ptrNum / TEN;
 
 	for (; tempNumber; tempNumber /= HUNDRED)
@@ -282,7 +275,7 @@ int* sumOddDigits(int* ptrNum)
 		sumOdd += tempNumber % TEN;
 	}
 
-	return (&sumOdd);
+	return (sumOdd);
 }
 
 //----------------------------------------------------------------------
@@ -294,11 +287,11 @@ int* sumOddDigits(int* ptrNum)
 // Parameters   : 
 //			ptrNum  - A pointer. (In)
 //
-// Return Value : A pointer with value of a number made of its odd digit 
+// Return Value : A number made of its odd digits. 
 //
 //----------------------------------------------------------------------
 
-int* makeOddDigitsNum(int* ptrNum)
+int makeOddDigitsNum(int* ptrNum)
 {
 	int newNumber = ZERO;
 	int tempNumber = *ptrNum;
@@ -310,7 +303,7 @@ int* makeOddDigitsNum(int* ptrNum)
 		newNumber = newNumber * TEN + tempNumber % TEN;
 	}
 
-	return (&newNumber);
+	return (newNumber);
 }
 
 //----------------------------------------------------------------------
@@ -328,17 +321,16 @@ int* makeOddDigitsNum(int* ptrNum)
 //
 //----------------------------------------------------------------------
 
-void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer)
+double power(double* ptrNumber, int numberOfTimes)
 {
-	*answer = ONE;
-	int numberOfTimes = *ptrNumberOfTimes;
+	double answer = ONE;
 
-	for (numberOfTimes; numberOfTimes; numberOfTimes--)
+	for (; numberOfTimes; numberOfTimes--)
 	{
-		*answer *= *ptrNumber;
+		answer *= *ptrNumber;
 	}
 
-	return;
+	return (answer);
 }
 
 //----------------------------------------------------------------------
@@ -357,7 +349,35 @@ void power(double* ptrNumber, int* ptrNumberOfTimes, double* answer)
 
 void concatenationNumbers(int* ptrNumOne, int* ptrNumTwo)
 {
-	int numTwoLength = *digitsLength(ptrNumTwo);
+	int numTwoLength = digitsLength(ptrNumTwo);
+	int flippedNumber = *ptrNumTwo;
+	flipNumber(&flippedNumber);
+
+	for (; flippedNumber; flippedNumber /= TEN)
+	{
+		*ptrNumOne = (*ptrNumOne) * (TEN)+(flippedNumber % TEN);
+	}
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                                 Copy
+//                                 ----
+//
+// General      : This function copies two strings into one.
+//
+// Parameters   : 
+//			ptrNumOne - A pointer. (In)
+//			ptrNumTwo - A pointer. (In)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void copy(char* ptrNumOne, char* ptrNumTwo)
+{
+	int numTwoLength = digitsLength(ptrNumTwo);
 	int flippedNumber = *ptrNumTwo;
 	flipNumber(&flippedNumber);
 
@@ -429,12 +449,12 @@ void swap(int* ptrNumOne, int* ptrNumTwo)
 //			ptrNum   - A pointer. (In)
 //			ptrDigit - The check digit number. (In)
 //
-// Return Value : Returns a pointer with a value of TRUE if 
-//                there is a digit in the numer, else FALSE.
+// Return Value : Returns true if there is a digit in the number
+//                else false.
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
+BOOLEAN isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
 {
 	int tempNumber = *ptrNum;
 	BOOLEAN isDigitOnNumber = FALSE;
@@ -444,7 +464,7 @@ BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
 		isDigitOnNumber = (tempNumber % TEN == *ptrDigit) ? TRUE : FALSE;
 	}
 
-	return (&isDigitOnNumber);
+	return (isDigitOnNumber);
 }
 
 
@@ -458,12 +478,12 @@ BOOLEAN* isDigitOnNum(int* ptrNum, unsigned short* ptrDigit)
 //			ptrNumOne   - A pointer. (In)
 //			ptrNumTwo - The check digit number. (In)
 //
-// Return Value : Returns a pointer with a value of TRUE if 
-//                there is a digit in the numer, else FALSE.
+// Return Value : Returns TRUE if there is a digit in the number, else
+//                FALSE.
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo)
+BOOLEAN isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo)
 {
 	int            tempNumber = *ptrNumOne;
 	BOOLEAN        isNumOnNum = FALSE;
@@ -472,10 +492,10 @@ BOOLEAN* isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo)
 	for (; tempNumber && !(isNumOnNum); tempNumber /= TEN)
 	{
 		digit = tempNumber % TEN;
-		isNumOnNum = *(isDigitOnNum(ptrNumTwo, &digit));
+		isNumOnNum = (isDigitOnNum(ptrNumTwo, &digit));
 	}
 
-	return (&isNumOnNum);
+	return (isNumOnNum);
 }
 
 //----------------------------------------------------------------------
@@ -487,12 +507,11 @@ BOOLEAN* isNumberOnNumber(int* ptrNumOne, int* ptrNumTwo)
 // Parameters   : 
 //			ptrNumber   - A pointer. (In)
 //
-// Return Value : Returns a pointer with a value of TRUE if 
-//                the number is prime, else FALSE.
+// Return Value : Returns TRUE if the number is prime, else FALSE.
 //
 //----------------------------------------------------------------------
 
-BOOLEAN* isNumberPrime(int* ptrNumber)
+BOOLEAN isNumberPrime(int* ptrNumber)
 {
 	int tempNumber = *ptrNumber;
 	int primeCounter = sqrt(&tempNumber); // sqrt is a blackbox.
@@ -503,7 +522,7 @@ BOOLEAN* isNumberPrime(int* ptrNumber)
 		isNumPrime = (tempNumber % primeCounter == ZERO) ? FALSE : TRUE;
 	}
 
-	return (&isNumPrime);
+	return (isNumPrime);
 }
 
 //----------------------------------------------------------------------
@@ -880,18 +899,57 @@ char itoa(int* num)
 	return (char)(*num);
 }
 
-void main(void)
+//----------------------------------------------------------------------
+//                          isStringAsSubStringOnMatriza
+//                          ----------------------------
+//
+// General      : This function checks if a string on matriza is a 
+//                sub string of another string on the matriza.
+//
+// Parameters   : 
+//			ptrMatriza - A pointer to matriza of strings (char*)
+//
+// Return Value : Returns TRUE if there is a string that is another 
+//                string's substring, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isStringASubStringOnMatriza(char* ptrMatriza)
 {
-	typedef char STRING[STRINGMAXSIZE];
+	char* ptrMatLastAddress = ptrMatriza + MAXSIZECOL * MAXSIZEROW;
+	char* tempPointer;
+	char* tempString = ptrMatriza;
+	BOOLEAN isTrue = FALSE;
 
-	STRING stringOne = { 'A','K','K', 'C', 'V'};
-	STRING stringCutted = { 'K','C','V'};
-	STRING testString;
+	while (ptrMatriza++ != ptrMatLastAddress && !isTrue)
+	{
+		*tempString = *ptrMatriza;
+		tempPointer = ptrMatriza + ONE;
+		while (tempPointer++ != ptrMatLastAddress && !isTrue)
+		{
+			isTrue = isSubStringOnString(tempString, tempPointer) ? TRUE : isTrue;
+		}
+	}
 
-	int testNum = 119;
+	return (isTrue);
+}
 
-	
-	printf("%d", sumDeleteStringFromString(&stringOne, &stringCutted));
+//----------------------------------------------------------------------
+//                         Last Address Word From String
+//                         -----------------------------
+//
+// General      : This function finds the first word on string.
+//
+// Parameters   : 
+//			ptrLastAddressWord - A pointer to a string (char*)
+//
+// Return Value : Returns the address of the finish of the
+//                first word on a string.
+//
+//----------------------------------------------------------------------
 
-	scanf("%hu", &testNum);
+char* lastAddressWordFromString(char* ptrLastAddressWord)
+{
+	while (*(ptrLastAddressWord++) != GARBAGE);
+	return (ptrLastAddressWord);
 }
