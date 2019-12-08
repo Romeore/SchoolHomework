@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 typedef struct Item {
-	void* address;
+	int   address;
 	void* value;
 } Item;
 
@@ -37,3 +37,13 @@ Item popStack(Stack* ptrStack);
 void pushStack(Stack* ptrStack, Item* value);
 
 BOOLEAN isStackEmpty(Stack* ptrStack);
+
+int numThatFlipsStack(Stack stack);
+
+int placementThatFlipsStack(Stack stack);
+
+void pushStackInStack(Stack* ptrStack, Stack* pushedStack);
+
+void deleteNumsFromStack(Stack* ptrStack, int* value);
+
+void deleteDuplicateInStack(Stack* ptrStack);
