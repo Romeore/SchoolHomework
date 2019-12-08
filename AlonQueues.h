@@ -35,19 +35,25 @@ typedef struct DQueue {
 	int    rear;
 } DQueue;
 
+//----------------------------------------------------------------------
+// Static Queue
+//----------------------------------------------------------------------
 
-// Static queue
 void  initQueue(Queue* ptrQueue);
 
-void  insertQueue(Queue* ptrQueue, void* item);
+void  insertQueue(Queue* ptrQueue, void* value);
 
 void* removeQueue(Queue* ptrQueue);
 
-// Dynamic queue
+//----------------------------------------------------------------------
+// Dynamic Queue
+//----------------------------------------------------------------------
 
 void  initDQueue(DQueue* ptrDQueue);
 
-void  insertDQueue(DQueue* ptrQueue, void* item);
+void  insertDQueue(DQueue* ptrDQueue, void* value);
+
+void  freeDQueue(DQueue* ptrQueue);
 
 void  printDQueue(DQueue* ptrDQueue);
 
@@ -55,4 +61,4 @@ void* removeDQueue(DQueue* ptrDQueue);
 
 int   numOfItemsDQueue(DQueue* ptrDQueue);
 
-int sumDQueue(DQueue* ptrDQueue);
+int   sumDQueue(DQueue* ptrDQueue);

@@ -7,23 +7,81 @@
 //----------------------------------------------------------------------
 // Static Queues
 //----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//                              Init Queue
+//                              ----------
+//
+// General      : This function initilaizes a queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)				
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void initQueue(Queue* ptrQueue)
 {
 	ptrQueue->amount = ZERO;
 	ptrQueue->front = ZERO;
 	ptrQueue->rear = ZERO;
+
+	return;
 }
+
+//----------------------------------------------------------------------
+//                             Is Queue Empty
+//                             --------------
+//
+// General      : This function checks if the queue is empty.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)		
+//
+// Return Value : Returns TRUE if the queue is empty, else FALSE.
+//
+//----------------------------------------------------------------------
 
 BOOLEAN isQueueEmpty(Queue* ptrQueue)
 {
 	return (ptrQueue->amount == ZERO);
 }
 
+//----------------------------------------------------------------------
+//                             Insert Queue
+//                             ------------
+//
+// General      : This function inserts a value into a queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)
+//          value    - A value (void*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void insertQueue(Queue* ptrQueue, void* value)
 {
 	ptrQueue->items[ptrQueue->rear++ % MAXSIZE] = value;
 	ptrQueue->amount++;
+
+	return;
 }
+
+//----------------------------------------------------------------------
+//                             Remove Queue
+//                             ------------
+//
+// General      : This function removes a value from a queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)
+//
+// Return Value : The value of the first value in the queue.
+//
+//----------------------------------------------------------------------
 
 void* removeQueue(Queue* ptrQueue)
 {
@@ -37,6 +95,19 @@ void* removeQueue(Queue* ptrQueue)
 	return (returnedValue);
 }
 
+//----------------------------------------------------------------------
+//                             Print Queue
+//                             -----------
+//
+// General      : This function prints a queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void printQueue(Queue* ptrQueue)
 {
 	int numOfItems = ptrQueue->front % FIVE - ptrQueue->rear % FIVE;
@@ -48,11 +119,26 @@ void printQueue(Queue* ptrQueue)
 		insertQueue(ptrQueue, value);
 		printf("%d", value);
 	}
+
+	return;
 }
 
-int numOfItemsQueue(Queue* ptrQueue)
+//----------------------------------------------------------------------
+//                           Num Of Items Queue
+//                           ------------------
+//
+// General      : This function calculates the number of items in queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (Queue*)
+//
+// Return Value : The number of items in a queue.
+//
+//----------------------------------------------------------------------
+
+int numOfItemsQueue(Queue* ptrDQueue)
 {
-	int numOfItems = ptrQueue->front % FIVE - ptrQueue->rear % FIVE;
+	int numOfItems = ptrDQueue->front % FIVE - ptrDQueue->rear % FIVE;
 
 	return (numOfItems);
 }
@@ -61,23 +147,80 @@ int numOfItemsQueue(Queue* ptrQueue)
 // Dynamic Queues
 //----------------------------------------------------------------------
 
-void initDQueue(DQueue* ptrDQueue)
+//----------------------------------------------------------------------
+//                              Init DQueue
+//                              ----------
+//
+// General      : This function initilaizes a dynamic queue.
+//
+// Parameters   : 
+//			ptrQueue - A pointer to queue (DQueue*)				
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void initDQueue(DQueue* ptrQueue)
 {
-	ptrDQueue->items = (void**)malloc(sizeof(void*));
-	ptrDQueue->rear = ZERO;
+	ptrQueue->items = (void**)malloc(sizeof(void*));
+	ptrQueue->rear = ZERO;
+
+	return;
 }
+
+//----------------------------------------------------------------------
+//                             Is DQueue Empty
+//                             ---------------
+//
+// General      : This function checks if the dynamic queue is empty.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : Returns TRUE if the queue is empty, else FALSE.
+//
+//----------------------------------------------------------------------
 
 BOOLEAN isDQueueEmpty(DQueue* ptrDQueue)
 {
 	return (ptrDQueue->rear == ZERO);
 }
 
-void insertDQueue(DQueue* ptrDQueue, void* item)
+//----------------------------------------------------------------------
+//                             Insert DQueue
+//                             ------------
+//
+// General      : This function inserts a value into a dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//          value     - A value (void*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void insertDQueue(DQueue* ptrDQueue, void* value)
 {
 	ptrDQueue->items = (void**)realloc(ptrDQueue->items, 
 		sizeof(void*) * ++ptrDQueue->rear);
-	ptrDQueue->items[ptrDQueue->rear - ONE] = item;
+	ptrDQueue->items[ptrDQueue->rear - ONE] = value;
+
+	return;
 }
+
+//----------------------------------------------------------------------
+//                             Remove Queue
+//                             ------------
+//
+// General      : This function removes a value from a dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : The value of the first value in the queue.
+//
+//----------------------------------------------------------------------
 
 void* removeDQueue(DQueue* ptrDQueue)
 {
@@ -96,11 +239,61 @@ void* removeDQueue(DQueue* ptrDQueue)
 	return (returnedValue);
 }
 
+//----------------------------------------------------------------------
+//                             Free DQueue
+//                             -----------
+//
+// General      : This function frees a dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void  freeDQueue(DQueue* ptrQueue)
+{
+	for (; ptrQueue->rear - ONE; ptrQueue->rear--)
+	{
+		free(ptrQueue->items[ptrQueue->rear]);
+	}
+
+	free(ptrQueue);
+	return;
+}
+
+//----------------------------------------------------------------------
+//                           Num Of Items DQueue
+//                           ------------------
+//
+// General      : This function calculates the number of items in
+//                a dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : The number of items in a queue.
+//
+//----------------------------------------------------------------------
 
 int numOfItemsDQueue(DQueue* ptrDQueue)
 {
 	return (ptrDQueue->rear);
 }
+
+//----------------------------------------------------------------------
+//                             Print DQueue
+//                             -----------
+//
+// General      : This function prints a dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void printDQueue(DQueue* ptrDQueue)
 {
@@ -116,6 +309,20 @@ void printDQueue(DQueue* ptrDQueue)
 
 	return;
 }
+
+//----------------------------------------------------------------------
+//                             Sum DQueue
+//                             ----------
+//
+// General      : This function make number off digits in a 
+//                dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//
+// Return Value : The number that made from the digits in the queue.
+//
+//----------------------------------------------------------------------
 
 int sumDQueue(DQueue* ptrDQueue)
 {
@@ -133,6 +340,20 @@ int sumDQueue(DQueue* ptrDQueue)
 	return (sumOfQueue);
 }
 
+//----------------------------------------------------------------------
+//                           Split Digits In DQueue
+//                           ----------------------
+//
+// General      : This function splits a number into digits in a 
+//                dynamic queue.
+//
+// Parameters   : 
+//			ptrDQueue - A pointer to queue (DQueue*)
+//          number    - A number to split.
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void splitDigitsInDQueue(DQueue* ptrDQueue, int number)
 {
@@ -151,6 +372,21 @@ void splitDigitsInDQueue(DQueue* ptrDQueue, int number)
 
 	return;
 }
+
+//----------------------------------------------------------------------
+//                           Sum Two DQueues
+//                           ---------------
+//
+// General      : This function sums two dynamic queues.
+//
+// Parameters   : 
+//			ptrDQueueOne   - A pointer to queue (DQueue*)
+//			ptrDQueueTwo   - A pointer to queue (DQueue*)
+//			ptrResultQueue - A pointer to queue for the result (DQueue*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void sumTwoDQueues(DQueue* ptrDQueueOne, DQueue* ptrDQueueTwo, DQueue* ptrResultQueue)
 {
