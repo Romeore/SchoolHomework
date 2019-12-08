@@ -18,32 +18,65 @@
 #define NINE          9
 #define TEN           10
 #define EMPTY         -1
-#define MAXSIZE       5
+#define MAXSIZESTACK  5
 
 #include <stdio.h>
-
-typedef struct Item {
-	int   address;
-	void* value;
-} Item;
+#include <malloc.h>
 
 typedef struct Stack{
-	Item  startStack[MAXSIZE];
+	void* items[MAXSIZESTACK];
 	int   offset;
 } Stack;
 
-Item popStack(Stack* ptrStack);
+typedef struct DStack {
+	void** items;
+	int    amount;
+} DStack;
 
-void pushStack(Stack* ptrStack, Item* value);
+//----------------------------------------------------------------------
+// Static Stack
+//----------------------------------------------------------------------
+
+void initStack(Stack* ptrStack);
+
+void* popStack(Stack* ptrStack);
 
 BOOLEAN isStackEmpty(Stack* ptrStack);
 
-int numThatFlipsStack(Stack stack);
-
-int placementThatFlipsStack(Stack stack);
+void pushStack(Stack* ptrStack, void* value);
 
 void pushStackInStack(Stack* ptrStack, Stack* pushedStack);
 
-void deleteNumsFromStack(Stack* ptrStack, int* value);
+void deleteValuesFromStack(Stack* ptrStack, void* value);
 
-void deleteDuplicateInStack(Stack* ptrStack);
+void deleteDuplicateValuesInStack(Stack* ptrStack);
+
+int flipOrderInStack(Stack stack);
+
+int flipOrderPlacementInStack(Stack stack);
+
+//----------------------------------------------------------------------
+// Dynamic Stack
+//----------------------------------------------------------------------
+
+void  initDStack(DStack* ptrStack);
+
+void  pushDStack(DStack* ptrStack, void* value);
+
+void* popDStack(DStack* ptrStack);
+
+BOOLEAN isDStackEmpty(DStack* ptrStack);
+
+void freeDStack(DStack* ptrStack);
+
+void deleteValuesFromDStack(DStack* ptrStack, void* value);
+
+void pushDStackIntoDStack(DStack* ptrStack, DStack* pushedStack);
+
+void deleteDuplicateValuesInDStack(DStack* ptrStack);
+
+void copyDStack(DStack* ptrStack, DStack* copyDStack);
+
+int  flipOrderInDStack(DStack* ptrStack);
+
+int  flipOrderPlacementInDStack(DStack* stack);

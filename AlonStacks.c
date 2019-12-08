@@ -4,6 +4,30 @@
 #include "AlonStacks.h"
 
 //----------------------------------------------------------------------
+// Static stacks
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//                              Init Stack
+//                              ----------
+//
+// General      : This functions initilaizes a stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (Stack*)				
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void initStack(Stack* ptrStack)
+{
+	ptrStack->offset = ZERO;
+
+	return;
+}
+
+//----------------------------------------------------------------------
 //                              Pop Stack
 //                              ---------
 //
@@ -13,42 +37,42 @@
 // Parameters   : 
 //			ptrStack - A pointer to stack (Stack*)					
 //
-// Return Value : The last item in stack. 
+// Return Value : The last value in stack.
 //
 //----------------------------------------------------------------------
 
-Item popStack(Stack* ptrStack) {
-	Item value = ptrStack->startStack[ptrStack->offset];
-	ptrStack->startStack->address = EMPTY;
-	ptrStack->startStack->value = EMPTY;
-	// blackbox change offset.
-	// Binary that if its zero, stay in zero.
-	ptrStack->offset = (ptrStack->offset == ZERO) ? ptrStack->offset : ptrStack->offset-- ;
-	return value;
+void* popStack(Stack* ptrStack)
+{
+	void* value;
+	(ptrStack->offset > EMPTY) ? (value = ptrStack->items[ptrStack->offset--])
+		: (value = NULL);
+
+	return (value);
 }
 
 //----------------------------------------------------------------------
-//                              Pop Stack
-//                              ---------
+//                              Push Stack
+//                              ----------
 //
-// General      : This functions adds a item to the last place in stack.
+// General      : This functions adds a value to the last place in stack.
 //
 // Parameters   : 
-//			ptrStack - A pointer to stack (Stack*)		
-//          valuePtr - A pointer to item  (Item*)
+//			ptrStack - A pointer to stack (Stack*)
+//          value    - A value(void*)
 //
 // Return Value : None. 
 //
 //----------------------------------------------------------------------
 
-void pushStack(Stack* ptrStack, Item* valuePtr) {
-	(ptrStack->offset != MAXSIZE) ? 
-		(ptrStack->startStack[++ptrStack->offset] = *valuePtr) : *valuePtr;
+void pushStack(Stack* ptrStack, void* value)
+{
+	(ptrStack->offset < MAXSIZESTACK) ?
+		(ptrStack->items[++ptrStack->offset] = value) : (value);
 }
 
 //----------------------------------------------------------------------
 //                             Is Stack Empty
-//                              ---------
+//                             --------------
 //
 // General      : This functions checks if the stack is empty.
 //
@@ -59,63 +83,64 @@ void pushStack(Stack* ptrStack, Item* valuePtr) {
 //
 //----------------------------------------------------------------------
 
-BOOLEAN isStackEmpty(Stack* ptrStack) {
-	return (ptrStack->startStack[ZERO].address == EMPTY);
+BOOLEAN isStackEmpty(Stack* ptrStack)
+{
+	return (ptrStack->offset == EMPTY);
 }
 
-
 //----------------------------------------------------------------------
-//                             Num That Flips Stack
-//                             --------------------
+//                           Flip Order In Stack
+//                           -------------------
 //
-// General      : This functions solves exercise number one.
+// General      : This functions finds the number that the order
+//                of the values flips from up to down.
 //
 // Parameters   : 
-//			stack - A  stack (Stack)		
+//			stack - A  stack (Stack)
 //
-// Return Value : Returns the number that flips between order up
-//                and order down.
+// Return Value : Returns the number that the order flips in the stack
+//                from up to down.
 //
 //----------------------------------------------------------------------
 
-int numThatFlipsStack(Stack stack) {
-	Item tempNum;
-	Item returnedNum = popStack(&stack);
+int flipOrderInStack(Stack stack) {
+	void* tempNum;
+	void* returnedNum = popStack(&stack);
 	BOOLEAN foundNumber = FALSE;
 	
 	while (!isStackEmpty(&stack) && foundNumber) {
 		tempNum = popStack(&stack);
-		(tempNum.value > returnedNum.value) ?
-			(returnedNum.value = tempNum.value) : (foundNumber = TRUE);
+		(tempNum > returnedNum) ?
+			(returnedNum = tempNum) : (foundNumber = TRUE);
 	}
 
-	return (returnedNum.value);
+	return ((int)returnedNum);
 }
 
 //----------------------------------------------------------------------
-//                             Num That Flips Stack
-//                             --------------------
+//                       Flip Order Placement In Stack
+//                       -----------------------------
 //
-// General      : This functions solves exercise number one.
+// General      : This functions finds the place of the number that
+//                the order flips from up to down.
 //
 // Parameters   : 
-//			stack - A  stack (Stack)		
+//			stack - A  stack (Stack)
 //
-// Return Value : Returns the place of the number that flips between 
-//                order up and order down.
+// Return Value : Returns the place of the number that the order flips
+//                from up to down.
 //
 //----------------------------------------------------------------------
 
-int placementThatFlipsStack(Stack stack) {
-	Item    tempNum;
-	Item    maxNum = popStack(&stack);
+int flipOrderPlacementInStack(Stack stack) {
+	void*   tempNum;
+	void*   maxNum = popStack(&stack);
 	BOOLEAN foundNumber = FALSE;
-	int  stackCounter = ZERO;
+	int     stackCounter = ZERO;
 
 	while (!isStackEmpty(&stack) && !foundNumber) {
 		tempNum = popStack(&stack);
-		(tempNum.value > maxNum.value) ?
-			stackCounter++ : (foundNumber = TRUE);
+		(tempNum > maxNum) ? stackCounter++ : (foundNumber = TRUE);
 		maxNum = tempNum;
 	}
 
@@ -137,65 +162,405 @@ int placementThatFlipsStack(Stack stack) {
 //----------------------------------------------------------------------
 
 void pushStackInStack(Stack* ptrStack, Stack* pushedStack) {
-	Item tempItem;
-
 	while (!isStackEmpty(pushedStack))
 	{
-		tempItem = popStack(pushedStack);
-		pushStack(ptrStack, &tempItem);
+		pushStack(ptrStack, popStack(pushedStack));
 	}
+
+	return;
 }
 
 //----------------------------------------------------------------------
-//                           Delete Nums From Stack
+//                           Delete Values From Stack
+//                           ------------------------
+//
+// General      : This functions deletes a value from a stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (Stack*)
+//          value    - A value.
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteValuesFromStack(Stack* ptrStack, void* value)
+{
+	Stack tempStack;
+	void* valueInStack;
+
+	while (!isStackEmpty(ptrStack))
+	{
+		valueInStack = popStack(ptrStack);
+		if (valueInStack == value)
+		{
+			pushStack(&tempStack, valueInStack);
+		}
+	}
+	
+	pushStackInStack(ptrStack, &tempStack);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                      Delete Duplicate Values In Stack
+//                      --------------------------------
+//
+// General      : This functions deletes duplicate values in stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (Stack*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteDuplicateValuesInStack(Stack* ptrStack)
+{
+	Stack saveStack;
+	void* currectValue;
+
+	while (!isStackEmpty(ptrStack))
+	{
+		currectValue = popStack(ptrStack);
+		deleteNumsFromStack(ptrStack, &currectValue);
+		pushStack(&saveStack, &currectValue);
+	}
+
+	pushStackInStack(ptrStack, &saveStack);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+// Dynamic stacks
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//                              Init DStack
+//                              ----------
+//
+// General      : This functions initilaizes a dynamic stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)				
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void initDStack(DStack* ptrStack)
+{
+	ptrStack->items = (void**)malloc(sizeof(void*));
+	ptrStack->amount = ZERO;
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                              Push DStack
+//                              -----------
+//
+// General      : This functions pushes a value into dynamic stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)
+//          value    - A value.
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void pushDStack(DStack* ptrStack, void* value)
+{
+	ptrStack->items = (void**)realloc(ptrStack->items, 
+		sizeof(void*) * ++ptrStack->amount);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                              Pop DStack
+//                              ----------
+//
+// General      : This functions pops a value from a dynamic stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)
+//
+// Return Value : The last value in the stack.
+//
+//----------------------------------------------------------------------
+
+void* popDStack(DStack* ptrStack)
+{
+	void* value = NULL;
+	if (ptrStack->amount)
+	{
+		value = ptrStack->items[ptrStack->amount--];
+		ptrStack->items = (void**)realloc(ptrStack->items,
+			sizeof(void*) * ptrStack->amount);
+	}
+
+	return (value);
+}
+
+//----------------------------------------------------------------------
+//                             Is DStack Empty
+//                             ---------------
+//
+// General      : This functions checks if the dynamic stack is empty
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)
+//
+// Return Value : Returns TRUE if the stack is empty, else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isDStackEmpty(DStack* ptrStack)
+{
+	return (ptrStack->amount == ZERO);
+}
+
+//----------------------------------------------------------------------
+//                               Free DStack
+//                               -----------
+//
+// General      : This functions frees the dynamic stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void freeDStack(DStack* ptrStack)
+{
+	for (; ptrStack->amount; ptrStack->amount--)
+	{
+		free(ptrStack->items[ptrStack->amount]);
+	}
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                           Delete Values From DStack
 //                           ----------------------
 //
-// General      : This functions deletes a number from a stack.
+// General      : This functions deletes a value from a dynamic stack.
 //
 // Parameters   : 
-//			ptrStack - A pointer to stack (Stack*)
-//          value    - A pointer to a value that needed to delete.
+//			ptrStack - A pointer to dynamic stack (DStack*)
+//          value    - A value.
 //
 // Return Value : None.
 //
 //----------------------------------------------------------------------
 
-void deleteNumsFromStack(Stack* ptrStack, int* value) {
-	Stack saveStack;
-	Item  numberInStack;
+void deleteValuesFromDStack(DStack* ptrStack, void* value)
+{
+	DStack tempStack;
+	void* valueInStack;
 
-	while (!isStackEmpty(ptrStack))
+	initDStack(&tempStack);
+	while (!isDStackEmpty(ptrStack))
 	{
-		numberInStack = popStack(ptrStack);
-		(numberInStack.value == value) ? numberInStack : pushStack(&saveStack, &numberInStack);
+		valueInStack = popDStack(ptrStack);
+		if (valueInStack == value)
+		{
+			pushDStack(&tempStack, valueInStack);
+		}
 	}
 
-	pushStackInStack(ptrStack, &saveStack);
+	pushDStackIntoDStack(ptrStack, &tempStack);
+	freeDStack(&tempStack);
+
+	return;
 }
 
 //----------------------------------------------------------------------
-//                         Delete Duplicate In Stack
-//                         -------------------------
+//                           Push DStack Into DStack
+//                           -----------------------
 //
-// General      : This functions deletes duplicate numbers in stack.
+// General      : This functions pushes the one dynamic stack into 
+//                another dynamic stack.
 //
 // Parameters   : 
-//			ptrStack - A pointer to stack (Stack*)
+//			ptrStack    - A pointer to stack (Stack*)
+//          pushedStack - A pointer to stack that is pushed into.
 //
 // Return Value : None.
 //
 //----------------------------------------------------------------------
 
-void deleteDuplicateInStack(Stack* ptrStack) {
-	Stack saveStack;
-	Item  currectItem;
+void pushDStackIntoDStack(DStack* ptrStack, DStack* ptrPushedStack) 
+{
 
-	while (!isStackEmpty(ptrStack))
+	while(!isDStackEmpty(ptrPushedStack))
 	{
-		currectItem = popStack(ptrStack);
-		deleteNumsFromStack(ptrStack, &currectItem.value);
-		pushStack(&saveStack, &currectItem);
+		pushDStack(ptrStack, popDStack(ptrPushedStack));
 	}
 
-	pushStackInStack(ptrStack, &saveStack);
+	return;
+}
+
+//----------------------------------------------------------------------
+//                       Delete Duplicate Values In DStack
+//                       ---------------------------------
+//
+// General      : This functions deletes duplicate values in dynamic
+//                stack.
+//
+// Parameters   : 
+//			ptrStack    - A pointer to stack (Stack*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void deleteDuplicateValuesInDStack(DStack* ptrStack)
+{
+	DStack saveStack;
+	void* tempValue;
+
+	while (!isDStackEmpty(ptrStack))
+	{
+		tempValue = popDStack(ptrStack);
+		deleteValuesFromDStack(ptrStack, tempValue);
+		pushDStack(&saveStack, tempValue);
+	}
+
+	pushDStackIntoDStack(ptrStack, &saveStack);
+	freeDStack(&saveStack);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                               Copy DStack
+//                               -----------
+//
+// General      : This functions copies a dynamic stack to another.
+//
+// Parameters   : 
+//			ptrStack       - A pointer to stack (Stack*)
+//          ptrCopiedStack - A pointer to a stack that will be copied.
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void copyDStack(DStack* ptrStack, DStack* ptrCopiedDStack)
+{
+	int amount = ptrStack->amount;
+	DStack tempOneStack;
+	DStack tempTwoStack;
+	void* tempValue;
+
+	initDStack(&tempOneStack);
+	initDStack(&tempTwoStack);
+
+	tempOneStack.items = (void**)realloc(tempOneStack.items,
+		sizeof(void*) * amount);
+
+	tempTwoStack.items = (void**)realloc(tempTwoStack.items,
+		sizeof(void*) * amount);
+
+	ptrCopiedDStack->items = (void**)realloc(ptrCopiedDStack,
+		sizeof(void*) * amount);
+
+	for (; amount; amount--)
+	{
+		tempValue = popDStack(ptrStack);
+		pushDStack(&tempTwoStack, tempValue);
+		pushDStack(&tempOneStack, tempValue);
+	}
+
+	pushDStackIntoDStack(ptrStack, &tempOneStack);
+	pushDStackIntoDStack(ptrCopiedDStack, &tempTwoStack);
+
+	freeDStack(&tempTwoStack);
+	freeDStack(&tempOneStack);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                           Flip Order In DStack
+//                           --------------------
+//
+// General      : This functions finds the number that the order
+//                of the values flips from up to down.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack (DStack*)
+//
+// Return Value : Returns the number that the order flips in the stack
+//                from up to down.
+//
+//----------------------------------------------------------------------
+
+int  flipOrderInDStack(DStack* ptrStack)
+{
+	DStack copiedStack;
+	BOOLEAN isFound = FALSE;
+	void* tempValue;
+	void* maxValue;
+
+	copyDStack(ptrStack, &copiedStack);
+	maxValue = popDStack(&copiedStack);
+
+	while (!isDStackEmpty(&copiedStack) && !isFound)
+	{
+		tempValue = popDStack(&copiedStack);
+		(tempValue > maxValue) ? (isFound) : (isFound = TRUE);
+		maxValue = tempValue;
+	}
+
+	freeDStack(&copiedStack);
+
+	return ((int)maxValue);
+}
+
+//----------------------------------------------------------------------
+//                       Flip Order Placement In DStack
+//                       -----------------------------
+//
+// General      : This functions finds the place of the number that
+//                the order flips from up to down.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack(DStack*)
+//
+// Return Value : Returns the place of the number that the order flips
+//                from up to down.
+//
+//----------------------------------------------------------------------
+
+int flipOrderPlacementInDStack(DStack* ptrStack)
+{
+	DStack copiedStack;
+	BOOLEAN isFound = FALSE;
+	void* tempValue;
+	void* maxValue;
+	int counter = ZERO;
+
+	copyDStack(ptrStack, &copiedStack);
+	maxValue = popDStack(&copiedStack);
+
+	while (!isDStackEmpty(&copiedStack) && !isFound)
+	{
+		tempValue = popDStack(&copiedStack);
+		(tempValue > maxValue) ? (counter++) : (isFound = TRUE);
+		maxValue = tempValue;
+	}
+
+	counter++;
+	freeDStack(&copiedStack);
+
+	return (counter);
 }
