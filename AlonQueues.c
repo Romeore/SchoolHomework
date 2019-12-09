@@ -64,7 +64,7 @@ BOOLEAN isQueueEmpty(Queue* ptrQueue)
 
 void insertQueue(Queue* ptrQueue, void* value)
 {
-	ptrQueue->items[ptrQueue->rear++ % MAXSIZE] = value;
+	ptrQueue->items[ptrQueue->rear++ % MAXSIZEQUEUE] = value;
 	ptrQueue->amount++;
 
 	return;
@@ -88,7 +88,7 @@ void* removeQueue(Queue* ptrQueue)
 	void* returnedValue = NULL;
 	if (!isQueueEmpty(ptrQueue))
 	{
-		returnedValue = ptrQueue->items[ptrQueue->front++ % MAXSIZE];
+		returnedValue = ptrQueue->items[ptrQueue->front++ % MAXSIZEQUEUE];
 		ptrQueue->amount--;
 	}
 

@@ -18,13 +18,13 @@
 #define NINE          9
 #define TEN           10
 #define EMPTY         -1
-#define MAXSIZE       5
+#define MAXSIZEQUEUE  5
 
 #include <stdio.h>
 #include <malloc.h>
 
 typedef struct Queue {
-	void* items[MAXSIZE];
+	void* items[MAXSIZEQUEUE];
 	int   front;
 	int   rear;
 	int   amount;
