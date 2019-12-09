@@ -79,4 +79,6 @@ void copyDStack(DStack* ptrStack, DStack* copyDStack);
 
 int  flipOrderInDStack(DStack* ptrStack);
 
-int  flipOrderPlacementInDStack(DStack* stack);
+int  flipOrderPlacementInDStack(DStack* ptrStack);
+
+int  calculatePostFix(char* string);

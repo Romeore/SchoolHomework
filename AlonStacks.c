@@ -564,3 +564,68 @@ int flipOrderPlacementInDStack(DStack* ptrStack)
 
 	return (counter);
 }
+
+//----------------------------------------------------------------------
+//                           Calculate Post Fix
+//                           ------------------
+//
+// General      : This function calculates post fix equation from string
+//
+// Parameters   : 
+//			string - A string with equation.
+//
+// Return Value : Returns the result of the equation.
+//
+//----------------------------------------------------------------------
+
+// BlackBox function that converts infix to postfix.
+int calculatePostFix(char* string)
+{
+	DStack tempStack;
+	BOOLEAN isNum;
+	int result;
+
+	initDStack(&tempStack);
+	while (*(string++))
+	{
+		isCharNum(string) ? (pushDStack(&tempStack)) :
+			(result += calculateTwoValuesInDStack(&tempStack, string));
+	}
+
+	return (result);
+}
+
+//----------------------------------------------------------------------
+//                       Calculate Two Values In DStack
+//                       ------------------------------
+//
+// General      : This function calculates a math equation with 
+//                two values in the dynamic stack.
+//
+// Parameters   : 
+//			ptrStack - A pointer to stack(DStack*)
+//          symbpl   - A math symbol.
+//
+// Return Value : Returns the result of 2 values and the operator.
+//
+//----------------------------------------------------------------------
+
+int calculateTwoValuesInDStack(DStack* ptrStack, char* symbol)
+{
+	int result = ZERO;
+	int operandOne = popDStack(ptrStack);
+	int operandTwo = popDStack(ptrStack);
+
+	switch (*symbol)
+	{
+	case '*': result = operandTwo * operandOne;
+		break;
+	case '/': result = operandTwo / operandOne;
+		break;
+	case '+': result = operandTwo + operandOne;
+		break;
+	case '-': result = operandTwo - operandOne;
+	}
+
+	return (result);
+}
