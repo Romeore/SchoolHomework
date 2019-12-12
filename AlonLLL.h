@@ -20,11 +20,26 @@
 
 #include <stdio.h>
 #include <malloc.h>
+#include "AlonStrings.h"
 
 typedef struct LLLChar {
 	char     info;
 	LLLChar* nextAddress;
 } LLLChar;
+
+typedef struct LLLString {
+	char*      info;
+	LLLString* nextAddress;
+} LLLString;
+
+typedef struct LLLInt {
+	int     info;
+	LLLInt* nextAddress;
+} LLLInt;
+
+//----------------------------------------------------------------------
+// LLLChar
+//----------------------------------------------------------------------
 
 void initLLLChar(LLLChar** manager);
 
@@ -36,6 +51,24 @@ void insertAfterLLLChar(LLLChar* ptrAddAfter);
 
 void deleteAfterLLLChar(LLLChar* ptrDeleteAfter);
 
+void deleteSymbolFromSecondNodeLLLChar(LLLChar* deleteAfterPtr, char symbol);
+
+void deleteSymbolFromManagerLLLChar(LLLChar** manager, char symbol);
+
+void deleteSymbolFromLLLChar(LLLChar** manager, char symbol);
+
+void deleteDuplicateFromLLLChar(LLLChar* ptrDeleteNext);
+
 LLLChar* longestLLLCharWord(LLLChar* manager);
 
-void deleteSymbolFromLLLChar(LLLChar* deleteAfterPtr, char symbol);
+//----------------------------------------------------------------------
+// LLLInt
+//----------------------------------------------------------------------
+
+void sumNodesLLLInt(LLLInt* manager, int* ptrVector);
+
+//----------------------------------------------------------------------
+// LLLString
+//----------------------------------------------------------------------
+
+int longestStringPlaceLLLString(LLLString* manager);
