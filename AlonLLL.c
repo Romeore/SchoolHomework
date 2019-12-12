@@ -260,14 +260,15 @@ void deleteDuplicateFromLLLChar(LLLChar* ptrDeleteNext)
 //
 //----------------------------------------------------------------------
 
-void sumNodesLLLInt(LLLInt* manager, int* ptrVector)
+void sumNodesLLLInt(LLLInt* manager, int* ptrVector, int length)
 {
+	length--;
 	int sum = ZERO;
 
 	while (manager != NULL)
 	{
 		sum += manager->info;
-		*(ptrVector++) = sum;
+		*(ptrVector--+length) = sum;
 		manager = manager->nextAddress;
 	}
 
