@@ -268,7 +268,7 @@ void sumNodesLLLInt(LLLInt* manager, int* ptrVector, int length)
 	while (manager != NULL)
 	{
 		sum += manager->info;
-		*(ptrVector--+length) = sum;
+		*(ptrVector+length--) = sum;
 		manager = manager->nextAddress;
 	}
 
