@@ -110,7 +110,7 @@ void binaryAddToFile(FILE** ptrStarShipFile, int creatureCode)
 			(limitTop = mid - ONE) : (limitBottom = mid + ONE);
 	}
 
-	// If the limit top is minus, make it positive.
+	// If the limit top is negative, make it positive.
 	limitTop = ABS(limitTop);
 	// Check if the currect creature code is bigger than the new one
 	fseek(*ptrStarShipFile, sizeof(Creature) * limitTop, SEEK_SET);
