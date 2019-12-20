@@ -37,7 +37,7 @@ typedef struct Creature
 //
 //----------------------------------------------------------------------
 
-void binarySearchFile (FILE** ptrStarShipFile, int creatureCode)
+void binarySearchFile(FILE** ptrStarShipFile, int creatureCode)
 {
 	Creature tempCreature;
 	BOOLEAN foundCode = FALSE;
@@ -67,6 +67,7 @@ void binarySearchFile (FILE** ptrStarShipFile, int creatureCode)
 
 	// Move one place back to read the place again.
 	fseek(*ptrStarShipFile, -(long)(sizeof(Creature)), SEEK_CUR);
+
 	return;
 }
 
@@ -95,10 +96,10 @@ void binaryAddToFile(FILE** ptrStarShipFile, int creatureCode)
 	int size;
 
 	// Find the amount of creatures.
-	fseek(*ptrStarShipFile, 0, SEEK_END);
+	fseek(*ptrStarShipFile, ZERO, SEEK_END);
 	size = (ftell(*ptrStarShipFile)) / sizeof(Creature) - ONE;
 	limitTop = size;
-	
+
 	// Find the place of the closest code to the input code.
 	while (limitTop >= limitBottom)
 	{
@@ -128,7 +129,8 @@ void binaryAddToFile(FILE** ptrStarShipFile, int creatureCode)
 	}
 
 	// Place the file pointer to the writeable place.
-	fseek(*ptrStarShipFile, sizeof(Creature) * (limitTop + ONE), SEEK_SET);
+	fseek(*ptrStarShipFile, 
+		sizeof(Creature) * (limitTop + ONE), SEEK_SET);
 
 	return;
 }
@@ -180,7 +182,7 @@ void printAllCreatures()
 	{
 		printCreature(&tempCreature);
 	}
-	
+
 	// Close file
 	fclose(starShipFile);
 
@@ -262,7 +264,7 @@ void addACreature()
 	// Open file
 	FILE* starShipFile = fopen("starship.dat", "r+b");
 	Creature addedCreature;
-	
+
 	// Get the creature code.
 	printf("\nPlease write the creature code\n");
 	scanf("%d", &addedCreature.creatureCode);
@@ -277,9 +279,11 @@ void addACreature()
 	// Scan the added creature.
 	scanACreature(&addedCreature);
 	// Find its place on the file and write it.
-	binaryAddToFile(&starShipFile, addedCreature.creatureCode);
+	!feof(starShipFile) ? 
+		binaryAddToFile(&starShipFile, addedCreature.creatureCode)
+		: printf("\nAdding first creature !\n");
 	fwrite(&addedCreature, sizeof(Creature), ONE, starShipFile);
-	
+
 	// Close file
 	fclose(starShipFile);
 
@@ -363,7 +367,7 @@ void main(void)
 		printf("4. Exit.\n");
 		// Get the user's pick.
 		scanf("%d", &option);
-		
+
 		// Act like user's pick.
 		switch (option)
 		{
@@ -378,7 +382,7 @@ void main(void)
 			break;
 		}
 	}
-	
+
 	// End print
 	printf("\nThank you for using !\n");
 }
