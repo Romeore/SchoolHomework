@@ -5,7 +5,7 @@
 
 //----------------------------------------------------------------------
 //                          Insert Last CLLL
-//                          ----------------
+//                          -----------------
 //
 // General      : This function adds CLLL node (Nodes size = 1).
 //
@@ -18,10 +18,40 @@
 
 void insertLastCLLL(CLLL** manager)
 {
-	CLLL* newNode = (CLLL*)malloc(sizeof(CLLL));
-	
-	(*manager) = newNode;
-	(*manager)->nextAddress = newNode;
+	(*manager) = (CLLL*)malloc(sizeof(CLLL));
+	(*manager)->nextAddress = (*manager);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                          Insert End CLLL
+//                          ---------------
+//
+// General      : This function adds CLLL node to the end of CLLL.
+//
+// Parameters   : 
+//			manager - A pointer to the manager(CLLL**)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void insertEndCLLL(CLLL** manager)
+{	
+	insertAfterCLLL(*manager);
+	(*manager) = (*manager)->nextAddress;
+
+	return;
+}
+
+void printCLLL(CLLL* manager)
+{
+	printf("info 1 : %d\n", manager->info);
+	manager = manager->nextAddress;
+	printf("info 2 : %d\n", manager->info);
+	manager = manager->nextAddress;
+	printf("info 3 : %d\n", manager->info);
 
 	return;
 }
@@ -46,29 +76,6 @@ void insertAfterCLLL(CLLL* ptrAddAfter)
 	ptrAddAfter->nextAddress = newNode;
 	newNode->nextAddress = temp;
 
-	return;
-}
-
-//----------------------------------------------------------------------
-//                          Insert End CLLL
-//                          ---------------
-//
-// General      : This function adds CLLL node to the end of CLLL.
-//
-// Parameters   : 
-//			manager - A pointer to the manager(CLLL**)
-//
-// Return Value : None.
-//
-//----------------------------------------------------------------------
-
-void insertEndCLLL(CLLL** manager)
-{
-	CLLL* newNode = (CLLL*)malloc(sizeof(CLLL));
-	CLLL* temp = (*manager)->nextAddress;
-	(*manager)->nextAddress = newNode;
-	newNode->nextAddress = temp;
-	
 	return;
 }
 
@@ -109,7 +116,7 @@ void deleteAfterCLLL(CLLL* ptrDeleteAfter)
 
 void deleteLastCLLL(CLLL** manager)
 {
-	free((*manager)->nextAddress);
+	free((*manager));
 
 	return;
 }
@@ -122,18 +129,21 @@ void deleteLastCLLL(CLLL** manager)
 //
 // Parameters   : 
 //			manager        - A pointer to the manager(CLLL**)
-//			ptrDeleteAfter - A pointer to a CLL to delete after it(CLLL*)
 //
 // Return Value : None.
 //
 //----------------------------------------------------------------------
 
-void deleteEndCLLL(CLLL** manager, CLLL* ptrDeleteAfter)
+void deleteEndCLLL(CLLL** manager)
 {
-	CLLL* temp = ptrDeleteAfter->nextAddress->nextAddress;
-	free(ptrDeleteAfter->nextAddress);
-	ptrDeleteAfter->nextAddress = temp;
-	(*manager) = ptrDeleteAfter;
+	CLLL* temp = (*manager)->nextAddress;
+
+	while (temp->nextAddress != (*manager))
+	{
+		temp = temp->nextAddress;
+	}
+
+	deleteAfterCLLL(*manager);
 
 	return;
 }
@@ -153,7 +163,7 @@ void deleteEndCLLL(CLLL** manager, CLLL* ptrDeleteAfter)
 
 BOOLEAN isEmptyCLLL(CLLL* manager)
 {
-	return (manager->nextAddress == manager);
+	return (manager == NULL);
 }
 
 //----------------------------------------------------------------------
@@ -179,7 +189,7 @@ BOOLEAN findCLLL(CLLL** ptrNode, int info)
 
 	while ((*ptrNode) != ptrSave && !isFound)
 	{
-		((*ptrNode)->info == info) ? 
+		((*ptrNode)->info == info) ?
 			(isFound = TRUE) : (*ptrNode = (*ptrNode)->nextAddress);
 	}
 
@@ -231,7 +241,7 @@ int lengthCLLL(CLLL* manager)
 {
 	int counter;
 	CLLL* eodManager = manager;
-	
+
 	counter = (isEmptyCLLL(manager)) ? ZERO : ONE;
 	manager = manager->nextAddress;
 
@@ -321,7 +331,7 @@ CLLL** sumTwoCLLL(CLLL* managerOne, CLLL* managerTwo)
 	int length = lengthCLLL(managerOne);
 	int numToMove = length - ONE;
 	int numOfTimes;
-	CLLL** managerThree;
+	CLLL** managerThree = NULL;
 
 	insertLastCLLL(managerThree);
 	(*managerThree)->info = managerOne->info + managerTwo->nextAddress->info;
@@ -333,7 +343,7 @@ CLLL** sumTwoCLLL(CLLL* managerOne, CLLL* managerTwo)
 	{
 		insertEndCLLL(managerThree);
 		(*managerThree)->info = managerOne->info + managerTwo->nextAddress->info;
-		
+
 		managerOne = managerOne->nextAddress;
 		moveNumberOfTimesCLLL(&managerOne, numToMove);
 	}
@@ -359,12 +369,13 @@ CLLL** sumTwoCLLL(CLLL* managerOne, CLLL* managerTwo)
 
 CLLL** numOfSubStringsCLLLString(CLLLString* manager, char* subString)
 {
-	int countApperance;
+	int countApperance = ZERO;
 
 	CLLLString* eod = manager;
-	CLLL** newManager;
+	CLLL** newManager = NULL;
 
-	countApperance = sumSubStringOnString(manager->info, subString);
+	//countApperance = sumSubStringOnString(manager->info, subString);
+	
 	insertLastCLLL(newManager);
 	(*newManager)->info = countApperance;
 
@@ -372,11 +383,40 @@ CLLL** numOfSubStringsCLLLString(CLLLString* manager, char* subString)
 
 	while (manager != eod)
 	{
-		countApperance = sumSubStringOnString(manager->info, subString);
+		//countApperance = sumSubStringOnString(manager->info, subString);
 		insertEndCLLL(newManager);
 		(*newManager)->info = countApperance;
 		manager = manager->nextAddress;
 	}
 
 	return (newManager);
+}
+
+void freeCLLL(CLLL** manager)
+{
+	while ((*manager)->nextAddress != (*manager))
+	{
+		deleteEndCLLL(manager);
+	}
+
+	deleteLastCLLL(manager);
+
+	return;
+}
+
+void main(void)
+{
+	CLLL* testCLLL = NULL;
+	insertLastCLLL(&testCLLL);
+	
+	(testCLLL)->info = 2;
+	insertEndCLLL(&testCLLL);
+	(testCLLL)->info = 4;
+	insertEndCLLL(&testCLLL);
+	(testCLLL)->info = 3;
+	printCLLL(testCLLL);
+
+	freeCLLL(&testCLLL);
+
+	printf("Success");
 }

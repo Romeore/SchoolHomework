@@ -1,8 +1,6 @@
 //AlonCLLL.h
 #pragma once
 
-#define _CRT_SECURE_NO_WARNINGS
-
 #define BOOLEAN       unsigned short
 #define TRUE          1
 #define FALSE         0
@@ -24,13 +22,15 @@
 
 typedef struct CLLL {
 	int   info;
-	CLLL* nextAddress;
+	struct CLLL* nextAddress;
 } CLLL;
 
 typedef struct CLLLString {
 	char* info;
-	CLLL* nextAddress;
+	struct CLLLString* nextAddress;
 } CLLLString;
+
+void freeCLLL(CLLL** manager);
 
 void insertLastCLLL(CLLL** manager);
 
@@ -42,7 +42,7 @@ void deleteAfterCLLL(CLLL* ptrDeleteAfter);
 
 void deleteLastCLLL(CLLL** manager);
 
-void deleteEndCLLL(CLLL** manager, CLLL* ptrDeleteAfter);
+void deleteEndCLLL(CLLL** manager);
 
 void moveNumberOfTimesCLLL(CLLL** ptrToMove, int numToMove);
 
