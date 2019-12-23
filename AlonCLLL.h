@@ -46,6 +46,10 @@ void deleteEndCLLL(CLLL** manager);
 
 void moveNumberOfTimesCLLL(CLLL** ptrToMove, int numToMove);
 
+void printCLLL(CLLL* ptrNode);
+
+int numOfInfoAppendsCLLL(CLLL* manager, int info);
+
 int sumInfoCLLL(CLLL* manager);
 
 int lengthCLLL(CLLL* manager);
@@ -54,6 +58,6 @@ BOOLEAN isEmptyCLLL(CLLL* manager);
 
 BOOLEAN findCLLL(CLLL** ptrNode, int info);
 
-CLLL** sumTwoCLLL(CLLL* managerOne, CLLL* managerTwo);
+CLLL* sumTwoCLLL(CLLL* managerOne, CLLL* managerTwo);
 
-CLLL** numOfSubStringsCLLLString(CLLLString* manager, char* string);
+CLLL* numOfSubStringsCLLLString(CLLLString* manager, char* string);

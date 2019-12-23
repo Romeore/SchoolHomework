@@ -163,6 +163,31 @@ void deleteEndCLLL(CLLL** manager)
 }
 
 //----------------------------------------------------------------------
+//                              Free CLLL
+//                              ---------
+//
+// General      : This function frees the memory from the CLLL.
+//
+// Parameters   : 
+//          manager - The ptr of the manager of the CLLL(CLLL**).
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void freeCLLL(CLLL** manager)
+{
+	while ((*manager)->nextAddress != (*manager))
+	{
+		deleteEndCLLL(manager);
+	}
+
+	deleteLastCLLL(manager);
+
+	return;
+}
+
+//----------------------------------------------------------------------
 //                          Is Empty CLLL
 //                          -------------
 //
@@ -386,62 +411,18 @@ CLLL* numOfSubStringsCLLLString(CLLLString* manager, char* subString)
 	CLLLString* eod = manager;
 	CLLL* newManager = NULL;
 
-	//countApperance = sumSubStringOnString(manager->info, subString);
-	
+	countApperance = sumSubStringOnString(manager->info, subString);
 	insertLastCLLL(&newManager);
 	newManager->info = countApperance;
-
 	manager = manager->nextAddress;
 
 	while (manager != eod)
 	{
-		//countApperance = sumSubStringOnString(manager->info, subString);
+		countApperance = sumSubStringOnString(manager->info, subString);
 		insertEndCLLL(&newManager);
 		newManager->info = countApperance;
 		manager = manager->nextAddress;
 	}
 
 	return (newManager);
-}
-
-//----------------------------------------------------------------------
-//                              Free CLLL
-//                              ---------
-//
-// General      : This function frees the memory from the CLLL.
-//
-// Parameters   : 
-//          manager - The ptr of the manager of the CLLL(CLLL**).
-//
-// Return Value : None.
-//
-//----------------------------------------------------------------------
-
-void freeCLLL(CLLL** manager)
-{
-	while ((*manager)->nextAddress != (*manager))
-	{
-		deleteEndCLLL(manager);
-	}
-
-	deleteLastCLLL(manager);
-
-	return;
-}
-
-void main(void)
-{
-	CLLL* testCLLL = NULL;
-	insertLastCLLL(&testCLLL);
-	
-	(testCLLL)->info = 2;
-	insertEndCLLL(&testCLLL);
-	(testCLLL)->info = 4;
-	insertEndCLLL(&testCLLL);
-	(testCLLL)->info = 3;
-	printCLLL(testCLLL);
-
-	freeCLLL(&testCLLL);
-
-	printf("Success");
 }
