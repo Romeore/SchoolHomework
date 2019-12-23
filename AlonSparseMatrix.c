@@ -1,29 +1,57 @@
 //AlonSparseMatrix.c
 #pragma once
 
-#include "AlonSparseMatirx.h"
+#include "AlonSparseMatrix.h"
 
-void initSparseMatrix(sparseMatrix* manager, int row, int col)
+//----------------------------------------------------------------------
+//                          Init Sparse Matrix
+//                          ------------------
+//
+// General      : This function initilaizes sparse matrix.
+//
+// Parameters   : 
+//			manager - A pointer to the manager(sparseMatrix**)
+//          row     - The number of rows to add(int)
+//          col     - The number of columns to add(int)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void initSparseMatrix(sparseMatrix** manager, int row, int col)
 {
-	manager = (sparseMatrix*)malloc(sizeof(sparseMatrix));
-	sparseMatrix* saveManager = manager;
+	*manager = (sparseMatrix*)malloc(sizeof(sparseMatrix));
+	sparseMatrix* saveManager = *manager;
 	int counter;
 
-	manager->nextRow = manager;
-	manager->nextCol = manager;
+	(*manager)->nextRow = *manager;
+	(*manager)->nextCol = *manager;
 
 	for (counter = ZERO; counter < row; counter++)
 	{
-		addRowSparseMatrix(manager);
+		addRowSparseMatrix(*manager);
 	}
 
 	for (counter = ZERO; counter < col; counter++)
 	{
-		addColSparseMatrix(manager);
+		addColSparseMatrix(*manager);
 	}
 
 	return;
 }
+
+//----------------------------------------------------------------------
+//                        Add Row Sparse Matrix
+//                        ---------------------
+//
+// General      : This function adds a new row to the sparse matrix.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
 
 void addRowSparseMatrix(sparseMatrix* manager)
 {
@@ -43,6 +71,19 @@ void addRowSparseMatrix(sparseMatrix* manager)
 	return;
 }
 
+//----------------------------------------------------------------------
+//                        Add Col Sparse Matrix
+//                        ---------------------
+//
+// General      : This function adds a new column to the sparse matrix.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void addColSparseMatrix(sparseMatrix* manager)
 {
 	sparseMatrix* ptrEOD = manager;
@@ -61,29 +102,71 @@ void addColSparseMatrix(sparseMatrix* manager)
 	return;
 }
 
-sparseMatrix* findRowSparseMatrix(sparseMatrix* returnedRow, int row)
+//----------------------------------------------------------------------
+//                        Find Row Sparse Matrix
+//                        ----------------------
+//
+// General      : This function finds the row on the sparse matrix.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//          row     - The number of the row(Int)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+sparseMatrix* findRowSparseMatrix(sparseMatrix* manager, int row)
 {
 	int counter;
 
 	for (counter = ZERO; counter < row; counter++)
 	{
-		returnedRow = returnedRow->nextRow;
+		manager = manager->nextRow;
 	}
 
-	return (returnedRow);
+	return (manager);
 }
 
-sparseMatrix* findColSparseMatrix(sparseMatrix* returnedCol, int col)
+//----------------------------------------------------------------------
+//                        Find Col Sparse Matrix
+//                        ----------------------
+//
+// General      : This function finds the column on the sparse matrix.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//          col     - The number of the column(Int)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+sparseMatrix* findColSparseMatrix(sparseMatrix* manager, int col)
 {
 	int counter;
 
 	for (counter = ZERO; counter < col; counter++)
 	{
-		returnedCol = returnedCol->nextCol;
+		manager = manager->nextCol;
 	}
 
-	return (returnedCol);
+	return (manager);
 }
+
+//----------------------------------------------------------------------
+//                             Find Above
+//                             ----------
+//
+// General      : This function finds the column above the wanted node.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//          col     - The number of the column(Int)
+//
+// Return Value : The node that above the needed column.
+//
+//----------------------------------------------------------------------
 
 sparseMatrix* findAbove(sparseMatrix* manager,int col)
 {
@@ -97,6 +180,20 @@ sparseMatrix* findAbove(sparseMatrix* manager,int col)
 	return (manager);
 }
 
+//----------------------------------------------------------------------
+//                             Find Before
+//                             -----------
+//
+// General      : This function finds the row above the wanted node.
+//
+// Parameters   : 
+//			manager - The value of the manager(sparseMatrix*)
+//          row     - The number of the row(Int)
+//
+// Return Value : The node that above the needed row.
+//
+//----------------------------------------------------------------------
+
 sparseMatrix* findBefore(sparseMatrix* manager, int row)
 {
 	sparseMatrix* ptrEOD = manager;
@@ -109,6 +206,20 @@ sparseMatrix* findBefore(sparseMatrix* manager, int row)
 	return (manager);
 }
 
+//----------------------------------------------------------------------
+//                        Insert After Sparse Matrix
+//                        --------------------------
+//
+// General      : This function inserts a new node to the sparse matrix.
+//
+// Parameters   : 
+//			ptrBefore - Pointer that before the new node(sparseMatrix*)
+//          ptrAbove  - Pointer that above the new node(sparseMatrix*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void insertAfterSparseMatrix(sparseMatrix* ptrBefore, sparseMatrix* ptrAbove)
 {
 	sparseMatrix* newSM = (sparseMatrix*)malloc(sizeof(sparseMatrix));
@@ -118,7 +229,23 @@ void insertAfterSparseMatrix(sparseMatrix* ptrBefore, sparseMatrix* ptrAbove)
 	return;
 }
 
-void addItemSparseMatrix(int row, int col, TYPE info, sparseMatrix* manager)
+//----------------------------------------------------------------------
+//                        Add Item Sparse Matrix
+//                        ----------------------
+//
+// General      : This function adds a new item to the sparse matrix.
+//
+// Parameters   : 
+//          manager - The manager of the sparse matrix(sparseMatrix*)
+//          row     - The row that the item will be added(int)
+//          col     - The column that the item will be added(int)
+//          info    - The info that will be in the item.(Any type)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void addItemSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
 {
 	sparseMatrix* rowManager = findRowSparseMatrix(manager, row);
 	sparseMatrix* colManager = findColSparseMatrix(manager, col);
@@ -134,6 +261,19 @@ void addItemSparseMatrix(int row, int col, TYPE info, sparseMatrix* manager)
 	return;
 }
 
+//----------------------------------------------------------------------
+//                        Print Sparse Matrix Node
+//                        ------------------------
+//
+// General      : This function prints a sparse matrix node.
+//
+// Parameters   : 
+//          sparseMatrixNode - The node to print(sparseMatrix*)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
 void printSparseMatrixNode(sparseMatrix* sparseMatrixNode)
 {
 	printf("\nThe node is on row: %d\n", sparseMatrixNode->row);
@@ -143,9 +283,24 @@ void printSparseMatrixNode(sparseMatrix* sparseMatrixNode)
 	return;
 }
 
-void mulColSparseMatrix(sparseMatrix* sm, int row, int number)
+//----------------------------------------------------------------------
+//                        Mul Col Sparse Matrix
+//                        ---------------------
+//
+// General      : This function multiplays specific column by number.
+//
+// Parameters   : 
+//          manager - the manager of the sparseMatrix(sparseMatrix*)
+//          row     - the number of the row to multiplay(Int)
+//          number  - the number to multiplay(int)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void mulColSparseMatrix(sparseMatrix* manager, int row, int number)
 {
-	sparseMatrix* ptrRow = findRowSparseMatrix(sm, row);
+	sparseMatrix* ptrRow = findRowSparseMatrix(manager, row);
 	sparseMatrix* ptrEOD = ptrRow;
 
 	ptrRow = ptrRow->nextCol;
@@ -158,26 +313,38 @@ void mulColSparseMatrix(sparseMatrix* sm, int row, int number)
 	return;
 }
 
-CLLL** makeCLLLFromRowSparseMatrix(sparseMatrix* rowManager)
+//----------------------------------------------------------------------
+//                      Make CLLL From Row Sparse Matrix
+//                      --------------------------------
+//
+// General      : This function makes CLLL from a row in sparse matrix.
+//
+// Parameters   : 
+//          rowManager - the manager of a specific row(sparseMatrix*)
+//
+// Return Value : CLLL with the items in the specific row.
+//
+//----------------------------------------------------------------------
+
+CLLL* makeCLLLFromRowSparseMatrix(sparseMatrix* rowManager)
 {
 	sparseMatrix* ptrEOD = rowManager;
-	CLLL** clllManager = NULL; 
-	CLLL* tempCLLL;
+	CLLL* clllManager = NULL; 
 	
 	rowManager = rowManager->nextRow;
 
 	if (rowManager != ptrEOD)
 	{
-		insertLastCLLL(clllManager);
-		(*clllManager)->info = rowManager->info;
+		insertLastCLLL(&clllManager);
+		clllManager->info = rowManager->info;
 	}
 
 	rowManager = rowManager->nextRow;
 
 	while (rowManager != ptrEOD)
 	{
-		insertEndCLLL(clllManager);
-		(*clllManager)->info = rowManager->info;
+		insertEndCLLL(&clllManager);
+		clllManager->info = rowManager->info;
 
 		rowManager = rowManager->nextRow;
 	}
@@ -185,11 +352,24 @@ CLLL** makeCLLLFromRowSparseMatrix(sparseMatrix* rowManager)
 	return (clllManager);
 }
 
-CLLL** makeCLLLFromColSparseMatrix(sparseMatrix* colManager)
+//----------------------------------------------------------------------
+//                      Make CLLL From Col Sparse Matrix
+//                      --------------------------------
+//
+// General      : This function makes CLLL from a column in sparse 
+//                matrix.
+//
+// Parameters   : 
+//          colManager - the manager of a specific column(sparseMatrix*)
+//
+// Return Value : CLLL with the items in the specific column.
+//
+//----------------------------------------------------------------------
+
+CLLL* makeCLLLFromColSparseMatrix(sparseMatrix* colManager)
 {
 	sparseMatrix* ptrEOD = colManager;
 	CLLL* clllManager = NULL;
-	CLLL* tempCLLL;
 
 	colManager = colManager->nextCol;
 
@@ -212,7 +392,27 @@ CLLL** makeCLLLFromColSparseMatrix(sparseMatrix* colManager)
 	return (clllManager);
 }
 
-void exchangeRows(sparseMatrix* manager, int rowOne, int rowTwo)
+//----------------------------------------------------------------------
+//                         Store Sparse Matrix
+//                         -------------------
+//
+// General      : This function stores an info in a specific node.
+//
+// Parameters   : 
+//          manager - the manager of the sparse matrix(sparseMatrix*)
+//          row     - the row of the node to insert the info(int)
+//          col     - the column of the node to insert the info(int)
+//          info    - the info that wanted to be added(Any type).
+//
+// Return Value : CLLL with the items in the specific column.
+//
+//----------------------------------------------------------------------
+
+void storeSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
 {
-	// In progress ! :)
+	sparseMatrix* ptrCurrectNode = findColSparseMatrix(manager, col);
+	findRowSparseMatrix(ptrCurrectNode,row);
+	ptrCurrectNode->info = info;
+
+	return;
 }
