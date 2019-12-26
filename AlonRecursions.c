@@ -96,11 +96,11 @@ int sumEvenOddDifference(int num)
 {
 	if (num < TEN)
 	{
-		return ((isEven(num)) ? (num % TEN) : (-(num % TEN)));
+		return ((isEven(&num)) ? (num % TEN) : (-(num % TEN)));
 	}
 
 	return (sumEvenOddDifference(num / TEN) +
-		((isEven(num)) ? (num % TEN) : (-(num % TEN))));
+		((isEven(&num)) ? (num % TEN) : (-(num % TEN))));
 }
 
 //----------------------------------------------------------------------

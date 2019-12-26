@@ -1,7 +1,7 @@
 //AlonRecursions.h
 #pragma once
 
-#define BOOLEAN unsigned short
+#define BOOLEAN  unsigned short
 #define TRUE     1
 #define FALSE    0
 #define ZERO     0
@@ -19,8 +19,7 @@
 #define ABS(a)   (a < 0) ? -(a) : (a)
 
 #include <stdio.h>
-
-#include "AlonFunctions.h"
+#include "AlonPointers.h"
 
 int findMaxDigit(int num);
 
