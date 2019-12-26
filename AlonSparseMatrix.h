@@ -32,15 +32,15 @@ typedef struct sparseMatrix {
 
 void initSparseMatrix(sparseMatrix** manager, int row, int col);
 
-void addColSparseMatrix(sparseMatrix* manager);
+void addColSparseMatrix(sparseMatrix** manager);
 
-void addRowSparseMatrix(sparseMatrix* manager);
+void addRowSparseMatrix(sparseMatrix** manager);
 
 void addItemSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info);
 
 void printSparseMatrixNode(sparseMatrix* sparseMatrixNode);
 
-void insertAfterSparseMatrix(sparseMatrix* ptrBefore, sparseMatrix* ptrAbove);
+void insertAfterSparseMatrix(sparseMatrix** ptrBefore, sparseMatrix** ptrAbove);
 
 void mulColSparseMatrix(sparseMatrix* sm, int row, int number);
 
