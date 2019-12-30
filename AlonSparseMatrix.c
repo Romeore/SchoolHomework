@@ -18,27 +18,23 @@
 //
 //----------------------------------------------------------------------
 
-void initSparseMatrix(sparseMatrix** manager, int row, int col)
+void initSparseMatrix(sparseMatrix** manager, int rowLength, int colLength)
 {
 	*manager = (sparseMatrix*)malloc(sizeof(sparseMatrix));
 	sparseMatrix* saveManager = *manager;
 	int counter;
 
+	// Init the manager
 	(*manager)->nextRow = *manager;
 	(*manager)->nextCol = *manager;
 	(*manager)->col = -1;
 	(*manager)->row = -1;
 
-	for (counter = ZERO; counter < row; counter++)
-	{
-		addRowSparseMatrix(manager);
-	}
-
-	for (counter = ZERO; counter < col; counter++)
-	{
-		addColSparseMatrix(manager);
-	}
-
+	// Init rows
+	addNumOfRowsSparseMatrix(manager, rowLength);
+	*manager = saveManager;
+	// Init columns
+	addNumOfColsSparseMatrix(manager, colLength);
 	*manager = saveManager;
 
 	return;
@@ -78,6 +74,33 @@ void addRowSparseMatrix(sparseMatrix** manager)
 }
 
 //----------------------------------------------------------------------
+//                      Add Num Of Rows Sparse Matrix
+//                      -----------------------------
+//
+// General      : This function adds num of new rows to the sparse 
+//                matrix.
+//
+// Parameters   : 
+//			manager   - the pointer of the manager. (sparseMatrix**)
+//          numOfRows - number of rows to add. 
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void addNumOfRowsSparseMatrix(sparseMatrix** manager, int numOfRows)
+{
+	int counter;
+
+	for (counter = ZERO; counter < numOfRows; counter++)
+	{
+		addRowSparseMatrix(manager);
+	}
+
+	return;
+}
+
+//----------------------------------------------------------------------
 //                        Add Col Sparse Matrix
 //                        ---------------------
 //
@@ -106,6 +129,33 @@ void addColSparseMatrix(sparseMatrix** manager)
 	newCol->row = MANAGERMARK;
 	newCol->col = (*manager)->col + ONE;
 	*manager = ptrEOD;
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                      Add Num Of Cols Sparse Matrix
+//                      -----------------------------
+//
+// General      : This function adds num of new columns to the 
+//                sparse matrix.
+//
+// Parameters   : 
+//			manager   - the pointer of the manager. (sparseMatrix**)
+//          numOfCols - number of columns to add. 
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void addNumOfColsSparseMatrix(sparseMatrix** manager, int numOfCols)
+{
+	int counter;
+
+	for (counter = ZERO; counter < numOfCols; counter++)
+	{
+		addColSparseMatrix(manager);
+	}
 
 	return;
 }
@@ -254,13 +304,12 @@ void insertAfterSparseMatrix(sparseMatrix** ptrBefore, sparseMatrix** ptrAbove)
 //          manager - The manager of the sparse matrix(sparseMatrix*)
 //          row     - The row that the item will be added(int)
 //          col     - The column that the item will be added(int)
-//          info    - The info that will be in the item.(Any type)
 //
 // Return Value : None.
 //
 //----------------------------------------------------------------------
 
-void addItemSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
+void addItemSparseMatrix(sparseMatrix* manager, int row, int col)
 {
 	sparseMatrix* rowManager = findRowSparseMatrix(manager, row);
 	sparseMatrix* colManager = findColSparseMatrix(manager, col);
@@ -271,9 +320,45 @@ void addItemSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
 
 	rowManager->nextCol->col = col;
 	colManager->nextRow->row = row;
-	rowManager->nextCol->info = info;
 
 	return;
+}
+
+//----------------------------------------------------------------------
+//                      Is Item Exists Sparse Matrix
+//                      ----------------------------
+//
+// General      : This function checks if an item exists in an sparse
+//                matrix.
+//
+// Parameters   : 
+//			manager - the manager. (sparseMatrix*)
+//          row     - the number of row to check. (Int)
+//          col     - the number of column to check. (Int)
+//
+// Return Value : returns TRUE if the item exists in the sparse matrix,
+//                else FALSE.
+//
+//----------------------------------------------------------------------
+
+BOOLEAN isItemExistsSparseMatrix(sparseMatrix* manager, int row, int col)
+{
+	BOOLEAN isExists = FALSE;
+	sparseMatrix* rowManager = findRowSparseMatrix(manager, row);
+	sparseMatrix* ptrEOD = rowManager;
+
+	rowManager = rowManager->nextCol;
+
+	while (rowManager != ptrEOD && !isExists)
+	{
+		if (rowManager->col == col)
+		{
+			isExists = TRUE;
+		}
+		rowManager = rowManager->nextCol;
+	}
+
+	return (isExists);
 }
 
 //----------------------------------------------------------------------
@@ -283,7 +368,7 @@ void addItemSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
 // General      : This function prints a sparse matrix node.
 //
 // Parameters   : 
-//          sparseMatrixNode - The node to print(sparseMatrix*)
+//          sparseMatrixNode - the node to print. (sparseMatrix*)
 //
 // Return Value : None.
 //
@@ -294,6 +379,39 @@ void printSparseMatrixNode(sparseMatrix* sparseMatrixNode)
 	printf("\nThe node is on row: %d\n", sparseMatrixNode->row);
 	printf("\nThe node is on col: %d\n", sparseMatrixNode->col);
 	printf("\nThe node info is: %d\n", sparseMatrixNode->info);
+
+	return;
+}
+
+//----------------------------------------------------------------------
+//                        Print Sparse Matrix 
+//                        -------------------
+//
+// General      : This function prints the sparse matrix.
+//
+// Parameters   : 
+//          manager   - the manager of the sparse matrix.(sparseMatrix*)
+//          rowLength - the row length of the sparse matrix. (Int)
+//          colLength - the column length of the sparse matrix. (Int)
+//
+// Return Value : None.
+//
+//----------------------------------------------------------------------
+
+void printSparseMatrix(sparseMatrix* manager, int rowLength, int colLength)
+{
+	int counterRow;
+	int counterCol;
+
+	for (counterCol = ZERO; counterCol < colLength; counterCol++)
+	{
+		for (counterRow = ZERO; counterRow < rowLength; counterRow++)
+		{
+			isItemExistsSparseMatrix(manager, counterRow, counterCol) ?
+				printf("+ ") : printf("- ");
+		}
+		printf("\n");
+	}
 
 	return;
 }
@@ -430,4 +548,60 @@ void storeSparseMatrix(sparseMatrix* manager, int row, int col, TYPE info)
 	ptrCurrectNode->info = info;
 
 	return;
+}
+
+//----------------------------------------------------------------------
+//                               Num Of Cols
+//                               -----------
+//
+// General      : This function calculates the columns length of sparse
+//                matrix.
+//
+// Parameters   : 
+//			manager   - the manager. (sparseMatrix*)
+//
+// Return Value : returns the columns length.
+//
+//----------------------------------------------------------------------
+
+int numOfCols(sparseMatrix* manager)
+{
+	int colCounter;
+	sparseMatrix* ptrEOD = manager;
+
+	manager = manager->nextCol;
+	while (manager->nextCol != ptrEOD)
+	{
+		colCounter++;
+	}
+
+	return (colCounter);
+}
+
+//----------------------------------------------------------------------
+//                               Num Of Rows
+//                               -----------
+//
+// General      : This function calculates the rows length of sparse
+//                matrix.
+//
+// Parameters   : 
+//			manager   - the manager. (sparseMatrix*)
+//
+// Return Value : returns the rows length.
+//
+//----------------------------------------------------------------------
+
+int numOfRows(sparseMatrix* manager)
+{
+	int rowCounter;
+	sparseMatrix* ptrEOD = manager;
+
+	manager = manager->nextCol;
+	while (manager->nextCol != ptrEOD)
+	{
+		rowCounter++;
+	}
+
+	return (rowCounter);
 }
