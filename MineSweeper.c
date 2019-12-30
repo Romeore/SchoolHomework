@@ -113,13 +113,14 @@ void printBoard(Mine board[][BOARDSIZE])
 {
 	int counter;
 	int stopLoop = BOARDSIZE * BOARDSIZE;
+	int lastBoardSquare = BOARDSIZE - ONE;
 
 	for (counter = ZERO; counter < stopLoop; counter++)
 	{
 		(board[counter / BOARDSIZE][counter % BOARDSIZE].isActive) ?
 			printf("%c", board[counter / BOARDSIZE][counter % BOARDSIZE].symbol) :
 			printf(".");
-		(counter % BOARDSIZE == BOARDSIZE - 1) ? printf("\n") : printf(" ");
+		(counter % BOARDSIZE == lastBoardSquare) ? printf("\n") : printf(" ");
 	}
 
 	return;
@@ -140,9 +141,9 @@ void printBoard(Mine board[][BOARDSIZE])
 
 void putMinesOnBoard(Mine board[][BOARDSIZE])
 {
-	int row;
-	int col;
-	char inputString[BOARDSIZE * BOARDSIZE * FIVE];
+	int   row;
+	int   col;
+	char  inputString[BOARDSIZE * BOARDSIZE * FIVE];
 	char* ptrInputString = &inputString;
 
 	gets(inputString);
@@ -316,11 +317,11 @@ BOOLEAN isSquareGuessed(Mine board[][BOARDSIZE], int row, int col)
 void main(void)
 {
 	// Variable definition
-	Mine board[BOARDSIZE][BOARDSIZE];
+	Mine    board[BOARDSIZE][BOARDSIZE];
 	BOOLEAN hitMine = FALSE;
-	int row;
-	int col;
-	int numOfTurnsTillVictory;
+	int     row;
+	int     col;
+	int     numOfTurnsTillVictory;
 
 	// Code section
 
@@ -369,7 +370,7 @@ void main(void)
 	}
 
 	// If the player ended the game too early.
-	if (row == 999)
+	if (row == NINEHUNDREDNINETYNINE)
 	{
 		printf("\nYou ended this game too early, good luck next time !\n");
 	}

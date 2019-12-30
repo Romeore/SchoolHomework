@@ -1,27 +1,28 @@
 //MineSweeper.h
 #pragma once
 
-#define BOOLEAN   unsigned short
-#define TRUE      1
-#define FALSE     0
-#define ZERO      0
-#define ONE       1
-#define TWO       2
-#define THREE     3
-#define FOUR      4
-#define FIVE      5
-#define SIX       6
-#define SEVEN     7
-#define EIGHT     8
-#define NINE      9
-#define TEN       10
-#define BOARDSIZE 12
+#define BOOLEAN               unsigned short
+#define TRUE                  1
+#define FALSE                 0
+#define ZERO                  0
+#define ONE                   1
+#define TWO                   2
+#define THREE                 3
+#define FOUR                  4
+#define FIVE                  5
+#define SIX                   6
+#define SEVEN                 7
+#define EIGHT                 8
+#define NINE                  9
+#define TEN                   10
+#define BOARDSIZE             12
+#define NINEHUNDREDNINETYNINE 999
 
 #include <stdio.h>
 
 typedef struct Mine
 {
-	char symbol;
+	char    symbol;
 	BOOLEAN isActive;
 } Mine;
 
