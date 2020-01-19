@@ -26,7 +26,7 @@ typedef struct BinaryTree {
 	struct BinaryTree* right;
 } BinaryTree;
 
-void makeBinaryTree(BinaryTree** manager);
+void makeBinaryTree(BinaryTree** root);
 
 void setRightBinaryTree(BinaryTree* node);
 
