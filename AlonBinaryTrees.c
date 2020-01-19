@@ -245,7 +245,7 @@ int findMinBinaryTree(BinaryTree* node)
 		return (node->info);
 	}
 
-	return MIN(node->info, findMinBinaryTree(node->left));
+	return (findMinBinaryTree(node->left));
 }
 
 //----------------------------------------------------------------------
@@ -268,7 +268,7 @@ int findMaxBinaryTree(BinaryTree* node)
 		return (node->info);
 	}
 
-	return MAX(node->info, findMinBinaryTree(node->right));
+	return (findMinBinaryTree(node->right));
 }
 
 //----------------------------------------------------------------------
